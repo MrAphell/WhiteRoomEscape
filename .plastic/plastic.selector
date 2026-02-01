@@ -1,0 +1,3 @@
+repository "WhiteRoomEscape/WhiteRoomEscape@7971986824400@cloud"
+  path "/"
+    smartbranch "/main/Dev"
