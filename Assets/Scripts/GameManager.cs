@@ -62,28 +62,18 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("MainHub");
     }
 
-    // Ez a függvény csak az AKTUÁLIS játékos adatait nullázza
     public static void ResetCurrentPlayerData()
     {
-        // 1. Megnézzük, ki van bejelentkezve
         string currentPlayer = PlayerPrefs.GetString("CurrentPlayerName", "Default");
 
         Debug.Log("Adatok törlése ehhez a profilhoz: " + currentPlayer);
 
-        // 2. Töröljük a Rekord idejét
-        // (A kulcs formátuma: "Nev_TotalTime")
         PlayerPrefs.DeleteKey(currentPlayer + "_TotalTime");
 
-        // 3. Visszaállítjuk a pályákat 1-es szintre
-        // MEGJEGYZÉS: Jelenleg a 'LevelsUnlocked' közös. 
-        // Ha azt akarod, hogy ez is profilfüggõ legyen, késõbb fejleszthetjük.
-        // Most ez mindenkit visszazár az 1-esre.
         PlayerPrefs.SetInt(LevelKey, 1);
 
-        // 4. Életek visszaállítása
         PlayerPrefs.DeleteKey(LivesKey);
 
-        // 5. Mentés
         PlayerPrefs.Save();
         
         Debug.Log("Sikeres törlés!");
