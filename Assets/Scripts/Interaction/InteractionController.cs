@@ -44,7 +44,19 @@ public class InteractionController : MonoBehaviour
             if (_promptText != null)
             {
                 _promptText.gameObject.SetActive(true);
-                _promptText.text = "Press [E] to use ";
+
+                // Megnézzük, hogy EnergyDoor-ra nézünk-e
+                EnergyDoor lookedDoor = hit.collider.GetComponent<EnergyDoor>();
+                if (lookedDoor != null)
+                {
+                    // Ha igen, írjuk ki a specifikus infót (Ár/Visszatérítés)
+                    _promptText.text = lookedDoor.GetDoorInfo();
+                }
+                else
+                {
+                    // Ha bármi másra (kapcsoló, tárgy), akkor az alap szöveg
+                    _promptText.text = "Press [E] to interact";
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0))
@@ -53,6 +65,13 @@ public class InteractionController : MonoBehaviour
                 if (pSwitch != null)
                 {
                     pSwitch.Toggle();
+                    return;
+                }
+
+                EnergyDoor energyDoor = hit.collider.GetComponent<EnergyDoor>();
+                if (energyDoor != null)
+                {
+                    energyDoor.ToggleDoor();
                     return;
                 }
 
