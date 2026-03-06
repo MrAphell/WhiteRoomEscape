@@ -1,17 +1,20 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+
+// A játékos korlátozott erõforrásait (energia) és az ehhez kapcsolódó UI-t kezelõ rendszer
 public class EnergyManager : MonoBehaviour
 {
+    // Singleton példány a globális eléréshez (pl. ajtónyitásnál)
     public static EnergyManager Instance;
 
     [Header("Energia Beállítások")]
-    public int maxEnergy = 10;
-    private int _currentEnergy;
+    public int maxEnergy = 10; // Maximális kapacitás
+    private int _currentEnergy; // Aktuális energiaszint
 
     [Header("UI Kijelzõk")]
-    public TextMeshProUGUI energyText;
-    public TextMeshProUGUI interactionText;
+    public TextMeshProUGUI energyText;      // Az energiaszint szöveges megjelenítõje
+    public TextMeshProUGUI interactionText; // Interakciós üzenetek (pl. hibaüzenet)
 
     void Awake()
     {
@@ -25,15 +28,16 @@ public class EnergyManager : MonoBehaviour
         HideInteraction();
     }
 
+    // Energia levonásának megkísérlése (pl. ajtó kinyitásakor hívódik meg)
     public bool TryConsumeEnergy(int amount)
     {
-        // Ha van elég energia a nyitáshoz
+        // Sikeres levonás, ha van elég egység
         if (_currentEnergy >= amount)
         {
             _currentEnergy -= amount;
             UpdateEnergyUI();
 
-            // Pont 0
+            // Ha elfogyott minden forrás, a pálya automatikusan újraindul
             if (_currentEnergy <= 0)
             {
                 Debug.Log("Elfogyott az energia! Pálya újraindítása...");
@@ -43,15 +47,15 @@ public class EnergyManager : MonoBehaviour
             return true;
         }
 
-        // Ha nincs elég energia
+        // Ha nincs elég energia, hibaüzenet és kényszerített újraindítás (büntetés)
         ShowInteraction("Not enough energy!");
-
         Debug.Log("Kevés az energia a nyitáshoz! Pálya újraindítása...");
-        RestartLevel(); // Büntetés és újraindítás!
+        RestartLevel();
 
         return false;
     }
 
+    // Energia visszatöltése (pl. töltõállomásokhoz vagy bónuszokhoz)
     public void RestoreEnergy(int amount)
     {
         _currentEnergy += amount;
@@ -59,17 +63,19 @@ public class EnergyManager : MonoBehaviour
         UpdateEnergyUI();
     }
 
+    // Az UI szöveg és szín frissítése (kritikus szintnél piros jelzés)
     private void UpdateEnergyUI()
     {
         if (energyText != null)
         {
             energyText.text = "Energy: " + _currentEnergy + " / " + maxEnergy;
 
-            // Pirosan villog, ha már nagyon kevés van (3 vagy kevesebb)
+            // Vizuális figyelmeztetés 3 egység alatt
             energyText.color = _currentEnergy <= 3 ? Color.red : Color.green;
         }
     }
 
+    // Szöveges üzenet megjelenítése a képernyõn
     public void ShowInteraction(string message)
     {
         if (interactionText != null)
@@ -79,6 +85,7 @@ public class EnergyManager : MonoBehaviour
         }
     }
 
+    // Üzenet elrejtése
     public void HideInteraction()
     {
         if (interactionText != null)
@@ -87,14 +94,10 @@ public class EnergyManager : MonoBehaviour
         }
     }
 
-    // --- ÚJ RÉSZ: Pálya újraindítása ---
+    // Az aktuális jelenet újratöltése hiba vagy energiahiány esetén
     private void RestartLevel()
     {
-        // Újratölti az éppen aktív pályát (Game_8)
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
-
-        // Opcionális: Ha az életeket is akarod csökkenteni, vedd ki a kommentet az alábbi sor elõl:
-        // GameManager.LoseLife();
     }
 }

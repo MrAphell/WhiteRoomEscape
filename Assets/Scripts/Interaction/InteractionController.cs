@@ -1,147 +1,93 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
 using StarterAssets;
 
+// Ez a központi vezérlõ felel a játékos interakcióiért
 public class InteractionController : MonoBehaviour
 {
-    [Header("Settings")]
-    [SerializeField] private float _rayDistance = 3f;
-    [SerializeField] private LayerMask _interactionLayer;
-    [SerializeField] private Transform _cameraRoot;
+    [Header("Beállítások")]
+    [SerializeField] private float _rayDistance = 3f;      // Milyen messzire ér el a játékos keze
+    [SerializeField] private LayerMask _interactionLayer; // Melyik rétegen vannak az interaktív tárgyak
+    [SerializeField] private Transform _cameraRoot;       // Honnan induljon a sugár
 
     [Header("UI")]
-    [SerializeField] private Image _crosshair;
-    [SerializeField] private TextMeshProUGUI _promptText;
-    [SerializeField] private GameObject _keypadUI;
+    [SerializeField] private Image _crosshair;           // Célkereszt képe
+    [SerializeField] private TextMeshProUGUI _promptText; // Felugró szöveg helye
+    [SerializeField] private GameObject _keypadUI;        // A számkódos panel felülete
 
     private FirstPersonController _fpsController;
 
     private void Start()
     {
+        // Alaphelyzetben rögzítjük és elrejtjük az egérmutatót
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        // Eltároljuk a mozgásért felelõs komponenst
         _fpsController = GetComponent<FirstPersonController>();
     }
 
     private void Update()
     {
+        // Ha nyitva van a kódbeütõ, nem akarunk közben másba belenyúlni
         if (_keypadUI != null && _keypadUI.activeSelf) return;
 
+        // Folyamatosan nézzük, van-e valami elõttünk
         CheckForInteractable();
     }
 
     private void CheckForInteractable()
     {
+        // Sugár indítása a kamera irányába
         Ray ray = new Ray(_cameraRoot.position, _cameraRoot.forward);
-        RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, _rayDistance, _interactionLayer))
+        if (Physics.Raycast(ray, out RaycastHit hit, _rayDistance, _interactionLayer))
         {
+            // Ha eltaláltunk valamit a rétegen, zöldre vált a célkereszt
             if (_crosshair != null) _crosshair.color = Color.green;
+
+            // Megpróbáljuk lekérni az univerzális interakciós felületet a tárgyról
+            IInteractable interactable = hit.collider.GetComponent<IInteractable>();
+
             if (_promptText != null)
             {
                 _promptText.gameObject.SetActive(true);
-
-                // Megnézzük, hogy EnergyDoor-ra nézünk-e
-                EnergyDoor lookedDoor = hit.collider.GetComponent<EnergyDoor>();
-                if (lookedDoor != null)
-                {
-                    // Ha igen, írjuk ki a specifikus infót (Ár/Visszatérítés)
-                    _promptText.text = lookedDoor.GetDoorInfo();
-                }
-                else
-                {
-                    // Ha bármi másra (kapcsoló, tárgy), akkor az alap szöveg
-                    _promptText.text = "Press [E] to interact";
-                }
+                // Ha van rajta IInteractable, lekérjük a saját szövegét, egyébként alap szöveg
+                _promptText.text = (interactable != null) ? interactable.GetPrompt() : "Press [E] to interact";
             }
 
-            if (Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0))
+            // Ha megnyomjuk az 'E' gombot vagy a bal egérgombot, elindítjuk az interakciót
+            if (interactable != null && (Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0)))
             {
-                PuzzleSwitch pSwitch = hit.collider.GetComponent<PuzzleSwitch>();
-                if (pSwitch != null)
-                {
-                    pSwitch.Toggle();
-                    return;
-                }
-
-                EnergyDoor energyDoor = hit.collider.GetComponent<EnergyDoor>();
-                if (energyDoor != null)
-                {
-                    energyDoor.ToggleDoor();
-                    return;
-                }
-
-                MovableObject movable = hit.collider.GetComponent<MovableObject>();
-                if (movable != null)
-                {
-                    movable.Interact();
-                    return;
-                }
-
-                LevelEntrance entrance = hit.collider.GetComponent<LevelEntrance>();
-                if (entrance != null)
-                {
-                    entrance.EnterLevel();
-                    return;
-                }
-
-                GameExit exit = hit.collider.GetComponent<GameExit>();
-                if (exit != null)
-                {
-                    exit.QuitGame();
-                    return;
-                }
-
-                InteractWithSpecialObjects(hit.collider.name);
+                interactable.Interact();
             }
         }
         else
         {
+            // Ha nem nézünk semmire, visszaállítjuk a célkeresztet és elrejtjük a szöveget
             if (_crosshair != null) _crosshair.color = Color.white;
             if (_promptText != null) _promptText.gameObject.SetActive(false);
         }
     }
 
-    private void InteractWithSpecialObjects(string objectName)
+    // Speciális kezelõ a Keypad megnyitásához (kikapcsolja a mozgást, bekapcsolja az egeret)
+    public void OpenKeypad()
     {
-        switch (objectName)
-        {
-            case "Keypad_Trigger":
-                OpenKeypad();
-                break;
-
-            case "Locked_Door":
-                Debug.Log("Ez zárva van. Használd a Keypadet!");
-                if (_promptText != null) _promptText.text = "LOCKED - Find the Code!";
-                break;
-        }
+        _keypadUI.SetActive(true);
+        _fpsController.enabled = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        _crosshair.enabled = false;
     }
 
-    private void OpenKeypad()
-    {
-        if (_keypadUI != null)
-        {
-            _keypadUI.SetActive(true);
-            if (_fpsController != null) _fpsController.enabled = false;
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            if (_crosshair != null) _crosshair.enabled = false;
-        }
-    }
-
+    // Speciális kezelõ a Keypad bezárásához (visszaadja az irányítást a karakternek)
     public void CloseKeypad()
     {
-        if (_keypadUI != null)
-        {
-            _keypadUI.SetActive(false);
-            if (_fpsController != null) _fpsController.enabled = true;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            if (_crosshair != null) _crosshair.enabled = true;
-        }
+        _keypadUI.SetActive(false);
+        _fpsController.enabled = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        _crosshair.enabled = true;
     }
 }

@@ -2,37 +2,38 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+// Véletlenszerûen generált labirintust készítõ osztály Recursive Backtracker algoritmussal
 public class MazeGenerator : MonoBehaviour
 {
     [Header("Referenciák")]
-    public MazeCell cellPrefab;
-    public Transform playerObj;
-    public Transform exitObj;
+    public MazeCell cellPrefab; // Egyetlen labirintus-cella (falakkal)
+    public Transform playerObj; // A játékos transzformja
+    public Transform exitObj;   // A kijárati objektum transzformja
 
     [Header("Beállítások")]
-    public int width = 5;
-    public int height = 5;
-    public float cellSize = 4f;
+    public int width = 5;       // Labirintus szélessége (cellákban)
+    public int height = 5;      // Labirintus magassága (cellákban)
+    public float cellSize = 4f; // Egy cella fizikai mérete a világban
 
     [Header("Ajtó Magasság")]
     public float doorHeight = 1.2f;
 
-    // Konstansok: "mágikus számokat" (1,2,3,4) használjunk a kódban
+    // Irányok konstansai a könnyebb olvashatóságért
     private const int DIR_FRONT = 1;
     private const int DIR_BACK = 2;
     private const int DIR_LEFT = 3;
     private const int DIR_RIGHT = 4;
 
-    private MazeCell[,] _grid;
-    private bool[,] _visited;
+    private MazeCell[,] _grid;  // A cellák kétdimenziós tömbje
+    private bool[,] _visited;   // Nyilvántartja, melyik cellán járt már a generátor
 
     void Start()
     {
-        ClearOldMaze();
-        StartCoroutine(GenerateMazeRoutine());
+        ClearOldMaze(); // Esetleges régi labirintus törlése
+        StartCoroutine(GenerateMazeRoutine()); // Generálás indítása
     }
 
-    // 1. TAKARÍTÁS (Külön függvényben)
+    // Törli a hierarchiából az összes korábban legenerált cellát
     private void ClearOldMaze()
     {
         foreach (Transform child in transform)
@@ -41,23 +42,21 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 
-    // 2. FÕ FOLYAMAT
+    // A labirintusgenerálás fõ folyamata (Coroutine a várakozások miatt)
     IEnumerator GenerateMazeRoutine()
     {
-        InitializeGrid();
+        InitializeGrid(); // Üres rács felépítése minden fallal
 
-        // Megvárjuk, amíg az algoritmus végez
+        // Algoritmus futtatása a bal alsó sarokból (0,0)
         yield return StartCoroutine(RecursiveBacktracker(0, 0));
 
-        // FONTOS JAVÍTÁS! Várunk egy frame-et, hogy a Destroy() lefusson.
-        // Ha ezt nem tesszük meg, a falak még "léteznek" a memóriában,
-        // és a RotatePlayerToOpenPath rosszul döntene.
+        // Várunk egy frame-et, hogy a Unity fizikailag is törölje a falakat a memóriából
         yield return null;
 
-        PlaceObjectsAndRotatePlayer();
+        PlaceObjectsAndRotatePlayer(); // Játékos és kijárat elhelyezése
     }
 
-    // 3. RÁCS ÉPÍTÉSE
+    // Létrehozza a cellákat a megadott méretben, alapértelmezetten minden fal áll
     private void InitializeGrid()
     {
         _grid = new MazeCell[width, height];
@@ -70,13 +69,13 @@ public class MazeGenerator : MonoBehaviour
                 Vector3 pos = transform.position + new Vector3(x * cellSize, 0, y * cellSize);
                 MazeCell newCell = Instantiate(cellPrefab, pos, Quaternion.identity, transform);
 
-                newCell.name = $"Cell_{x}_{y}"; // Szebb elnevezés ($ jel)
+                newCell.name = $"Cell_{x}_{y}";
                 _grid[x, y] = newCell;
             }
         }
     }
 
-    // 4. ALGORITMUS (Backtracker)
+    // A labirintus "kivájása" verem (Stack) alapú bejárással
     IEnumerator RecursiveBacktracker(int startX, int startY)
     {
         Stack<Vector2Int> stack = new Stack<Vector2Int>();
@@ -87,14 +86,15 @@ public class MazeGenerator : MonoBehaviour
         {
             Vector2Int current = stack.Peek();
 
-            // Szomszédok összegyûjtése (kiszervezve)
+            // Megkeressük a még meg nem látogatott szomszédos cellákat
             List<int> validNeighbors = GetUnvisitedNeighbors(current);
 
             if (validNeighbors.Count > 0)
             {
+                // Véletlenszerû irány választása a szomszédok közül
                 int direction = validNeighbors[Random.Range(0, validNeighbors.Count)];
 
-                // Falak törlése és lépés (kiszervezve)
+                // Falak eltávolítása a jelenlegi és a célcella között
                 Vector2Int nextPos = RemoveWallsAndGetNextPos(current, direction);
 
                 _visited[nextPos.x, nextPos.y] = true;
@@ -102,34 +102,28 @@ public class MazeGenerator : MonoBehaviour
             }
             else
             {
-                stack.Pop();
+                stack.Pop(); // Ha nincs merre menni, visszalépünk (backtrack)
             }
-
-            // Ha látni akarod épülni, ide tehetsz: yield return new WaitForSeconds(0.05f);
         }
         yield return null;
     }
 
-    //  Szomszédok keresése
+    // Ellenõrzi, hogy a szomszédos cellák közül melyek nincsenek még meglátogatva
     private List<int> GetUnvisitedNeighbors(Vector2Int current)
     {
         List<int> neighbors = new List<int>();
         int x = current.x;
         int y = current.y;
 
-        // Front (y + 1)
         if (y + 1 < height && !_visited[x, y + 1]) neighbors.Add(DIR_FRONT);
-        // Back (y - 1)
         if (y - 1 >= 0 && !_visited[x, y - 1]) neighbors.Add(DIR_BACK);
-        // Left (x - 1)
         if (x - 1 >= 0 && !_visited[x - 1, y]) neighbors.Add(DIR_LEFT);
-        // Right (x + 1)
         if (x + 1 < width && !_visited[x + 1, y]) neighbors.Add(DIR_RIGHT);
 
         return neighbors;
     }
 
-    //  Falak kivétele és koordináta számítás
+    // Eltávolítja a falat az aktuális és a következõ cella közül
     private Vector2Int RemoveWallsAndGetNextPos(Vector2Int current, int direction)
     {
         int x = current.x;
@@ -137,27 +131,24 @@ public class MazeGenerator : MonoBehaviour
         int nextX = x;
         int nextY = y;
 
-        // 1. Saját fal kivétele
+        // 1. Saját fal törlése
         _grid[x, y].RemoveWall(direction);
 
-        // 2. Szomszéd koordináta számítása és szomszéd falának kivétele
+        // 2. Szomszéd koordinátájának meghatározása és a szemközti falának törlése
         switch (direction)
         {
             case DIR_FRONT:
                 nextY++;
                 if (IsInsideGrid(x, nextY)) _grid[x, nextY].RemoveWall(DIR_BACK);
                 break;
-
             case DIR_BACK:
                 nextY--;
                 if (IsInsideGrid(x, nextY)) _grid[x, nextY].RemoveWall(DIR_FRONT);
                 break;
-
             case DIR_LEFT:
                 nextX--;
                 if (IsInsideGrid(nextX, y)) _grid[nextX, y].RemoveWall(DIR_RIGHT);
                 break;
-
             case DIR_RIGHT:
                 nextX++;
                 if (IsInsideGrid(nextX, y)) _grid[nextX, y].RemoveWall(DIR_LEFT);
@@ -172,59 +163,46 @@ public class MazeGenerator : MonoBehaviour
         return x >= 0 && y >= 0 && x < width && y < height;
     }
 
-    // 5. Objektumok lerakása és játékos forgatása (külön függvényben)
+    // A kész labirintusba elhelyezi a játékost és a kijáratot
     void PlaceObjectsAndRotatePlayer()
     {
         float halfSize = cellSize / 2f;
 
-        // --- PLAYER ---
         if (playerObj != null)
         {
             CharacterController cc = playerObj.GetComponent<CharacterController>();
-            if (cc) cc.enabled = false;
+            if (cc) cc.enabled = false; // Kikapcsoljuk a fizikát a teleportálás idejére
 
             playerObj.position = transform.position + new Vector3(0, 1.5f, 0);
-
-            // Forgatás logika
-            RotatePlayerToOpenPath();
+            RotatePlayerToOpenPath(); // Játékos beforgatása a folyosó irányába
 
             if (cc) cc.enabled = true;
         }
 
-        // --- EXIT ---
         if (exitObj != null)
         {
-            PlaceExitDoor(halfSize);
+            PlaceExitDoor(halfSize); // Kijárat elhelyezése az utolsó cellában
         }
     }
 
+    // A játékos induláskor az üres út felé fog nézni a fal helyett
     private void RotatePlayerToOpenPath()
     {
         MazeCell startCell = _grid[0, 0];
-
-        // Alapértelmezett (átlós), ha valami hiba lenne
         Quaternion targetRotation = Quaternion.Euler(0, 45, 0);
 
-        // Itt most már mûködik a check, mert vártunk egy frame-et (yield return null)
-        if (startCell.wallFront == null)
-        {
-            targetRotation = Quaternion.Euler(0, 0, 0);
-        }
-        else if (startCell.wallRight == null)
-        {
-            targetRotation = Quaternion.Euler(0, 90, 0);
-        }
+        if (startCell.wallFront == null) targetRotation = Quaternion.Euler(0, 0, 0);
+        else if (startCell.wallRight == null) targetRotation = Quaternion.Euler(0, 90, 0);
 
         playerObj.rotation = targetRotation;
     }
 
-    //Ajtó
+    // Kijárati ajtó elhelyezése a labirintus átlós végpontján (width-1, height-1)
     private void PlaceExitDoor(float halfSize)
     {
         int endX = width - 1;
         int endY = height - 1;
         Vector3 endCenter = transform.position + new Vector3(endX * cellSize, 0, endY * cellSize);
-
         Vector3 doorPos = endCenter + new Vector3(halfSize, doorHeight, 0);
 
         exitObj.position = doorPos;
