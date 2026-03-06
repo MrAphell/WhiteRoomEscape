@@ -1,15 +1,12 @@
 using UnityEngine;
 
-public class GameExit : MonoBehaviour
+// Ez a script kezeli a játékból való kilépést, ha a játékos interakcióba lép az objektummal
+public class GameExit : MonoBehaviour, IInteractable
 {
-    public void QuitGame()
+    public void Interact()
     {
-        Debug.Log("A játék bezárul...");
-
+        Debug.Log("Kilépés a játékból...");
         Application.Quit();
-
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#endif
     }
+    public string GetPrompt() => "Press [E] to Quit Game";
 }
