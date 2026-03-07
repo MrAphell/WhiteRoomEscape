@@ -90,4 +90,5 @@ public class InteractionController : MonoBehaviour
         Cursor.visible = false;
         _crosshair.enabled = true;
     }
+
 }

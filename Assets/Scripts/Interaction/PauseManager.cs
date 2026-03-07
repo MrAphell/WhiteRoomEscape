@@ -77,14 +77,14 @@ public class PauseManager : MonoBehaviour
     {
         if (pausePanel != null) pausePanel.SetActive(true);
 
-        Time.timeScale = 0f; // Idõ megállítása (fizika, animációk leállnak)
+        Time.timeScale = 0f; // Idõ megállítása
         IsPaused = true;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
 
-    // Visszatérés a fõmenübe: idõ visszaállítása és a jelenet betöltése
+    // Visszatérés a fõmenübe
     public void LoadMainMenu()
     {
         Time.timeScale = 1f;

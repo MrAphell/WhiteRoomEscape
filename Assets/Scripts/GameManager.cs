@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static int MaxLives = 3;
 
-    // Mentési kulcsok a PlayerPrefs rendszerhez
+    // Mentési kulcsok a PlayerPrefs rendszerhez (csak a haladáshoz és az élethez)
     private static string LevelKey = "LevelsUnlocked";
     private static string LivesKey = "CurrentLives";
 
@@ -23,24 +23,25 @@ public class GameManager : MonoBehaviour
         return string.IsNullOrEmpty(numberPart) ? 1 : int.Parse(numberPart);
     }
 
-    // Szint befejezésekor hívódik meg: kezeli a rekordidõt és a haladást
-    public static void CompleteLevel(int levelCompleted)
+    // Szint befejezésekor hívódik meg: beküldi a rekordidõt a JSON-be és kezeli a haladást
+    // ÚJÍTÁS: Most már kéri a pontos idõt és a pálya nevét paraméterként!
+    // Szint befejezésekor hívódik meg: lekéri a Unity belsõ óráját és beküldi a JSON-be
+    public static void CompleteLevel(int levelCompleted, string levelId)
     {
+        // 1. IDÕ LEKÉRÉSE A UNITY-TÕL (A jelenet betöltése óta eltelt másodpercek)
         float timeSpent = Time.timeSinceLevelLoad;
 
-        string currentPlayer = PlayerPrefs.GetString("CurrentPlayerName", "Default");
-        string timeKey = currentPlayer + "_TotalTime";
-
-        float previousBestTime = PlayerPrefs.GetFloat(timeKey, 0);
-
-        // Csak akkor mentünk új idõt, ha az jobb a réginél
-        if (previousBestTime == 0 || timeSpent < previousBestTime)
+        // 2. IDÕ BEKÜLDÉSE AZ ÚJ SCOREMANAGER-NEK
+        if (ScoreManager.Instance != null)
         {
-            PlayerPrefs.SetFloat(timeKey, timeSpent);
-            PlayerPrefs.Save();
+            ScoreManager.Instance.AddScore(levelId, timeSpent);
+        }
+        else
+        {
+            Debug.LogError("Nem található a ScoreManager a jelenetben! Az idõ nem lett elmentve.");
         }
 
-        // Következõ szint feloldása, ha az aktuálisat elõször vittük ki
+        // 3. KÖVETKEZÕ SZINT FELOLDÁSA
         int currentProgress = GetUnlockedLevel();
         if (levelCompleted >= currentProgress)
         {
@@ -73,15 +74,13 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("MainHub");
     }
 
-    // Csak az aktív játékos profiljának nullázása
+    // Csak az aktív játékos profiljának (haladásának) nullázása
     public static void ResetCurrentPlayerData()
     {
-        string currentPlayer = PlayerPrefs.GetString("CurrentPlayerName", "Default");
-
-        PlayerPrefs.DeleteKey(currentPlayer + "_TotalTime");
+        // Megjegyzés: A JSON Scoreboard rekordjait ez a gomb szándékosan nem törli, 
+        // hiszen a dicsõséglista (Top 3) állandó marad, mint a játéktermi gépeken!
         PlayerPrefs.SetInt(LevelKey, 1);
         PlayerPrefs.DeleteKey(LivesKey);
-
         PlayerPrefs.Save();
     }
 }

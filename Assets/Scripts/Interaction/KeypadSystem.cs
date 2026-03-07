@@ -60,12 +60,14 @@ public class KeypadSystem : MonoBehaviour, IInteractable
         {
             _displayText.text = "SUCCESS";
             _displayText.color = Color.green;
+
+            // Kinyitjuk a kijárathoz vezetõ ajtót
             if (_openDoorObject != null) _openDoorObject.SetActive(true);
             if (_lockedDoor != null) _lockedDoor.SetActive(false);
 
-            // Haladás mentése és pálya teljesítettnek jelölése
-            int levelNum = GameManager.GetLevelNumberFromScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
-            GameManager.CompleteLevel(levelNum);
+            // TÖRÖLTÜK A GAMEMANAGER HÍVÁST! 
+            // A mentést majd az Exit_To_Hub ajtón lévõ LevelEntrance script végzi el,
+            // miután a játékos átment a kinyílt ajtón.
 
             Invoke("ClosePanel", 1f); // Egy másodperc múlva bezárjuk a panelt
         }
@@ -82,14 +84,21 @@ public class KeypadSystem : MonoBehaviour, IInteractable
     // Kijelzõ frissítése a beírt karakterekkel
     private void UpdateDisplay() { if (_displayText.text != "SUCCESS" && _displayText.text != "ERROR") _displayText.text = _currentInput; }
 
-    // Panel bezárása és az irányítás visszaadása a karakternek
-    private void ClosePanel()
+    // Panel bezárása és az irányítás visszaadása a karakternek (EZ LEGYEN PUBLIC!)
+    public void ClosePanel()
     {
         InteractionController controller = FindAnyObjectByType<InteractionController>();
         if (controller != null) controller.CloseKeypad();
         else _uiPanel.SetActive(false);
     }
 
-    // Utolsó karakter törlése
-    private void DeleteLastDigit() { if (_currentInput.Length > 0) { _currentInput = _currentInput.Substring(0, _currentInput.Length - 1); UpdateDisplay(); } }
+    // Utolsó karakter törlése (EZ IS LEGYEN PUBLIC!)
+    public void DeleteLastDigit()
+    {
+        if (_currentInput.Length > 0)
+        {
+            _currentInput = _currentInput.Substring(0, _currentInput.Length - 1);
+            UpdateDisplay();
+        }
+    }
 }

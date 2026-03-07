@@ -158,8 +158,9 @@ MonoBehaviour:
   - {fileID: 1463079613}
   - {fileID: 1564597590}
   - {fileID: 529689595}
-  baseColor: {r: 0.003921569, g: 0.003921569, b: 0.003921569, a: 0.39215687}
-  successColor: {r: 0, g: 1, b: 0, a: 1}
+  lockedColor: {r: 1, g: 0, b: 0, a: 1}
+  unlockedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  completedColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!4 &119670254
 Transform:
   m_ObjectHideFlags: 0
@@ -301,6 +302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelEntrance
   sceneToLoad: Game_6
+  isLevelExit: 0
 --- !u!1 &322389816
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,6 +429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelEntrance
   sceneToLoad: Game_2
+  isLevelExit: 0
 --- !u!1 &370753618
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,6 +556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelEntrance
   sceneToLoad: Game_4
+  isLevelExit: 0
 --- !u!1 &373572234
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,6 +683,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelEntrance
   sceneToLoad: Game_1
+  isLevelExit: 0
 --- !u!1 &529689595
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,6 +717,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelEntrance
   sceneToLoad: Game_9
+  isLevelExit: 0
 --- !u!65 &529689597
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1587,6 +1593,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelEntrance
   sceneToLoad: Game_7
+  isLevelExit: 0
 --- !u!65 &1463079615
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1713,6 +1720,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelEntrance
   sceneToLoad: Game_8
+  isLevelExit: 0
 --- !u!65 &1564597592
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2466,6 +2474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelEntrance
   sceneToLoad: Game_5
+  isLevelExit: 0
 --- !u!1 &1751317253
 GameObject:
   m_ObjectHideFlags: 0
@@ -3044,6 +3053,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelEntrance
   sceneToLoad: Game_3
+  isLevelExit: 0
 --- !u!1 &6529348736167662577 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5509536711756272132, guid: a34372dba4de3614fb3b4658dd3b94f2, type: 3}
