@@ -23,15 +23,12 @@ public class GameManager : MonoBehaviour
         return string.IsNullOrEmpty(numberPart) ? 1 : int.Parse(numberPart);
     }
 
-    // Szint befejezésekor hívódik meg: beküldi a rekordidõt a JSON-be és kezeli a haladást
-    // ÚJÍTÁS: Most már kéri a pontos idõt és a pálya nevét paraméterként!
-    // Szint befejezésekor hívódik meg: lekéri a Unity belsõ óráját és beküldi a JSON-be
     public static void CompleteLevel(int levelCompleted, string levelId)
     {
-        // 1. IDÕ LEKÉRÉSE A UNITY-TÕL (A jelenet betöltése óta eltelt másodpercek)
+        // 1. Idõ lekérése
         float timeSpent = Time.timeSinceLevelLoad;
 
-        // 2. IDÕ BEKÜLDÉSE AZ ÚJ SCOREMANAGER-NEK
+        // 2. Idõ beküldése
         if (ScoreManager.Instance != null)
         {
             ScoreManager.Instance.AddScore(levelId, timeSpent);
@@ -41,7 +38,7 @@ public class GameManager : MonoBehaviour
             Debug.LogError("Nem található a ScoreManager a jelenetben! Az idõ nem lett elmentve.");
         }
 
-        // 3. KÖVETKEZÕ SZINT FELOLDÁSA
+        // 3. Következõ szint feloldása, ha szükséges
         int currentProgress = GetUnlockedLevel();
         if (levelCompleted >= currentProgress)
         {
@@ -77,8 +74,6 @@ public class GameManager : MonoBehaviour
     // Csak az aktív játékos profiljának (haladásának) nullázása
     public static void ResetCurrentPlayerData()
     {
-        // Megjegyzés: A JSON Scoreboard rekordjait ez a gomb szándékosan nem törli, 
-        // hiszen a dicsõséglista (Top 3) állandó marad, mint a játéktermi gépeken!
         PlayerPrefs.SetInt(LevelKey, 1);
         PlayerPrefs.DeleteKey(LivesKey);
         PlayerPrefs.Save();

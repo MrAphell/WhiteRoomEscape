@@ -162,7 +162,7 @@ public class MainMenuController : MonoBehaviour
         if (welcomeText != null) welcomeText.text = "Welcome: " + currentProfile;
     }
 
-    // eállítások mentése
+    // Beállítások mentése
 
     public void SetVolume(float volume)
     {
