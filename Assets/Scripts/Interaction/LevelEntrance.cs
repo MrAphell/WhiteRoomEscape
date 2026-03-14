@@ -38,9 +38,9 @@ public class LevelEntrance : MonoBehaviour, IInteractable
                 Debug.Log($"Pálya teljesítve! Adatok beküldve: {currentSceneName}.");
             }
 
-            // Elmentjük az aktuális pályát: Ez kell a Hub-ba való visszatéréshez, 
-            // hogy tudjuk, melyik ajtó elé tegyük vissza a karaktert.
-            PlayerPrefs.SetString("LastScene", currentSceneName);
+            // Elmentjük az aktuális pályát: Ez kell a Hub-ba való visszatéréshez,hogy tudjuk, melyik ajtó elé tegyük vissza a karaktert.
+
+            PlayerPrefs.SetString(GameManager.GetCurrentProfile() + "_LastScene", currentSceneName);
             PlayerPrefs.Save();
 
             // Scene betöltése

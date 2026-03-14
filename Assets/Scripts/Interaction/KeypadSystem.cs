@@ -65,10 +65,6 @@ public class KeypadSystem : MonoBehaviour, IInteractable
             if (_openDoorObject != null) _openDoorObject.SetActive(true);
             if (_lockedDoor != null) _lockedDoor.SetActive(false);
 
-            // TÖRÖLTÜK A GAMEMANAGER HÍVÁST! 
-            // A mentést majd az Exit_To_Hub ajtón lévõ LevelEntrance script végzi el,
-            // miután a játékos átment a kinyílt ajtón.
-
             Invoke("ClosePanel", 1f); // Egy másodperc múlva bezárjuk a panelt
         }
         else if (_currentInput.Length == 4)
@@ -84,7 +80,7 @@ public class KeypadSystem : MonoBehaviour, IInteractable
     // Kijelzõ frissítése a beírt karakterekkel
     private void UpdateDisplay() { if (_displayText.text != "SUCCESS" && _displayText.text != "ERROR") _displayText.text = _currentInput; }
 
-    // Panel bezárása és az irányítás visszaadása a karakternek (EZ LEGYEN PUBLIC!)
+    // Panel bezárása és az irányítás visszaadása a karakternek
     public void ClosePanel()
     {
         InteractionController controller = FindAnyObjectByType<InteractionController>();
@@ -92,7 +88,7 @@ public class KeypadSystem : MonoBehaviour, IInteractable
         else _uiPanel.SetActive(false);
     }
 
-    // Utolsó karakter törlése (EZ IS LEGYEN PUBLIC!)
+    // Utolsó karakter törlése
     public void DeleteLastDigit()
     {
         if (_currentInput.Length > 0)

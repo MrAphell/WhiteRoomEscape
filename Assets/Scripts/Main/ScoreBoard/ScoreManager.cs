@@ -87,7 +87,7 @@ public class ScoreManager : MonoBehaviour
     public void AddScore(string levelID, float newTime)
     {
         // Lekérjük az aktív játékos nevét a PlayerPrefs-bõl
-        string currentPlayer = PlayerPrefs.GetString("CurrentPlayerName", "Default");
+        string currentPlayer = GameManager.GetCurrentProfile();
 
         // 1. Keresés: Megnézzük, van-e már ilyen pálya az adatbázisban
         LevelRecord record = _database.records.Find(r => r.levelID == levelID);

@@ -3525,29 +3525,10 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 271121569148081967, guid: 3a5733482e87ff745a4c3d1906301ad8, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 3745264086386253160, guid: 3a5733482e87ff745a4c3d1906301ad8, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1755198972}
+      addedObject: {fileID: 2121715122}
   m_SourcePrefab: {fileID: 100100000, guid: 3a5733482e87ff745a4c3d1906301ad8, type: 3}
---- !u!1 &1755198971 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 271121569148081967, guid: 3a5733482e87ff745a4c3d1906301ad8, type: 3}
-  m_PrefabInstance: {fileID: 1755198970}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1755198972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1755198971}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e0929110c15623489265565d92c4020, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LevelEntrance
-  sceneToLoad: MainHub
-  isLevelExit: 1
 --- !u!1 &1925608988
 GameObject:
   m_ObjectHideFlags: 0
@@ -3872,6 +3853,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -25, z: 0}
+--- !u!1 &2121715117 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3745264086386253160, guid: 3a5733482e87ff745a4c3d1906301ad8, type: 3}
+  m_PrefabInstance: {fileID: 1755198970}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2121715122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121715117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e0929110c15623489265565d92c4020, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelEntrance
+  sceneToLoad: MainHub
+  isLevelExit: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

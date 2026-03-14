@@ -1,22 +1,29 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// A játékmenet mentéseit, az életeket és a szintek feloldását kezelõ központi osztály
 public class GameManager : MonoBehaviour
 {
     public static int MaxLives = 3;
 
-    // Mentési kulcsok a PlayerPrefs rendszerhez (csak a haladáshoz és az élethez)
-    private static string LevelKey = "LevelsUnlocked";
-    private static string LivesKey = "CurrentLives";
+    // Ez a kulcs mondja meg, ki az aktuális játékos (ezt a Profilválasztónál állítjuk be)
+    private static string CurrentProfileKey = "ActiveProfileName";
 
-    // Visszaadja a legmagasabb feloldott szint számát
-    public static int GetUnlockedLevel()
+    // Visszaadja az éppen bejelentkezett profil nevét (ha nincs, "Default" lesz)
+    public static string GetCurrentProfile()
     {
-        return PlayerPrefs.GetInt(LevelKey, 1);
+        return PlayerPrefs.GetString(CurrentProfileKey, "Default");
     }
 
-    // Segédfüggvény: kinyeri a számot a jelenet nevébõl
+    // DINAMIKUS KULCSOK: Minden profilnak saját kulcsa lesz (pl. "Rami_LevelsUnlocked")
+    private static string GetLevelKey() => GetCurrentProfile() + "_LevelsUnlocked";
+    private static string GetLivesKey() => GetCurrentProfile() + "_CurrentLives";
+
+    public static int GetUnlockedLevel()
+    {
+        // Most már csak a saját profilja szintjét olvassa be
+        return PlayerPrefs.GetInt(GetLevelKey(), 1);
+    }
+
     public static int GetLevelNumberFromScene(string sceneName)
     {
         string numberPart = System.Text.RegularExpressions.Regex.Match(sceneName, @"\d+").Value;
@@ -25,57 +32,51 @@ public class GameManager : MonoBehaviour
 
     public static void CompleteLevel(int levelCompleted, string levelId)
     {
-        // 1. Idõ lekérése
         float timeSpent = Time.timeSinceLevelLoad;
 
-        // 2. Idõ beküldése
         if (ScoreManager.Instance != null)
         {
             ScoreManager.Instance.AddScore(levelId, timeSpent);
         }
-        else
-        {
-            Debug.LogError("Nem található a ScoreManager a jelenetben! Az idõ nem lett elmentve.");
-        }
 
-        // 3. Következõ szint feloldása, ha szükséges
         int currentProgress = GetUnlockedLevel();
         if (levelCompleted >= currentProgress)
         {
-            PlayerPrefs.SetInt(LevelKey, levelCompleted + 1);
+            // Mentés a profil-specifikus kulcsba
+            PlayerPrefs.SetInt(GetLevelKey(), levelCompleted + 1);
             PlayerPrefs.Save();
         }
     }
 
-    // Élet levonása; ha elfogy, alaphelyzetbe állítja a játékot
     public static void LoseLife()
     {
-        int current = PlayerPrefs.GetInt(LivesKey, MaxLives);
+        int current = PlayerPrefs.GetInt(GetLivesKey(), MaxLives);
         current--;
 
         if (current <= 0)
         {
-            ResetGame();
+            ResetCurrentPlayerData(); // Csak a saját adatait nullázza le!
+            SceneManager.LoadScene("MainHub");
         }
         else
         {
-            PlayerPrefs.SetInt(LivesKey, current);
+            PlayerPrefs.SetInt(GetLivesKey(), current);
             PlayerPrefs.Save();
         }
     }
 
-    // Teljes mentés törlése és visszatérés a Hub-ba
-    public static void ResetGame()
+    // Ez most már csak az éppen aktív profilt törli ki, nem mindenkit!
+    public static void ResetCurrentPlayerData()
+    {
+        PlayerPrefs.DeleteKey(GetLevelKey());
+        PlayerPrefs.DeleteKey(GetLivesKey());
+        PlayerPrefs.Save();
+    }
+
+    // Ha tényleg mindent (minden profilt) le akarsz gyalulni
+    public static void MasterReset()
     {
         PlayerPrefs.DeleteAll();
         SceneManager.LoadScene("MainHub");
-    }
-
-    // Csak az aktív játékos profiljának (haladásának) nullázása
-    public static void ResetCurrentPlayerData()
-    {
-        PlayerPrefs.SetInt(LevelKey, 1);
-        PlayerPrefs.DeleteKey(LivesKey);
-        PlayerPrefs.Save();
     }
 }

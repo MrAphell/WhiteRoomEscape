@@ -380,7 +380,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7175790091214622074, guid: 3a5733482e87ff745a4c3d1906301ad8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10
+      value: 10.0999
       objectReference: {fileID: 0}
     - target: {fileID: 7175790091214622074, guid: 3a5733482e87ff745a4c3d1906301ad8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1986,11 +1986,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8039017210664011321, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -547.4818
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8039017210664011321, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -280.45
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8039017210664011321, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2007,6 +2007,10 @@ PrefabInstance:
     - target: {fileID: 8092092515033120691, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
       propertyPath: m_Name
       value: KeypadUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 8092092515033120691, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8753158494024503758, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

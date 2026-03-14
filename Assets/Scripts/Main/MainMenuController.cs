@@ -74,8 +74,9 @@ public class MainMenuController : MonoBehaviour
 
     public void StartGame()
     {
-        // Elmentjük az aktuális profilt, mielõtt belépünk a Hub-ba
-        PlayerPrefs.SetString("CurrentPlayerName", currentProfile);
+        // A GameManager ezt a kulcsot fogja keresni ("ActiveProfileName")
+        PlayerPrefs.SetString("ActiveProfileName", currentProfile);
+        PlayerPrefs.Save();
         SceneManager.LoadScene("MainHub");
     }
 
@@ -97,9 +98,10 @@ public class MainMenuController : MonoBehaviour
     {
         string savedString = PlayerPrefs.GetString(PROFILES_KEY, "Default");
         profileNames = savedString.Split(',').ToList();
-        currentProfile = PlayerPrefs.GetString(LAST_PROFILE_KEY, "Default");
 
-        // Biztonsági ellenõrzés: ha a mentett profil törölve lett, visszaállunk Default-ra
+        // A GameManager-es kulcsot olvassuk be
+        currentProfile = PlayerPrefs.GetString("ActiveProfileName", "Default");
+
         if (!profileNames.Contains(currentProfile)) currentProfile = "Default";
     }
 
@@ -109,6 +111,9 @@ public class MainMenuController : MonoBehaviour
         string dataToSave = string.Join(",", profileNames);
         PlayerPrefs.SetString(PROFILES_KEY, dataToSave);
         PlayerPrefs.SetString(LAST_PROFILE_KEY, currentProfile);
+
+        PlayerPrefs.SetString("ActiveProfileName", currentProfile);
+
         PlayerPrefs.Save();
     }
 

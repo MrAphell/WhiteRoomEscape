@@ -88,7 +88,7 @@ public class InteractionController : MonoBehaviour
         _fpsController.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        _crosshair.enabled = true;
+        if (_crosshair != null) _crosshair.enabled = true;
     }
 
 }

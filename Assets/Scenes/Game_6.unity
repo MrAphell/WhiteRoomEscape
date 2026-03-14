@@ -1239,6 +1239,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door_Hinge
       objectReference: {fileID: 0}
+    - target: {fileID: 271121569148081967, guid: 3a5733482e87ff745a4c3d1906301ad8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 7175790091214622074, guid: 3a5733482e87ff745a4c3d1906301ad8, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.75
@@ -1288,13 +1292,13 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 271121569148081967, guid: 3a5733482e87ff745a4c3d1906301ad8, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 3745264086386253160, guid: 3a5733482e87ff745a4c3d1906301ad8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1121254695}
   m_SourcePrefab: {fileID: 100100000, guid: 3a5733482e87ff745a4c3d1906301ad8, type: 3}
 --- !u!1 &1121254694 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 271121569148081967, guid: 3a5733482e87ff745a4c3d1906301ad8, type: 3}
+  m_CorrespondingSourceObject: {fileID: 3745264086386253160, guid: 3a5733482e87ff745a4c3d1906301ad8, type: 3}
   m_PrefabInstance: {fileID: 1121254693}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1121254695
@@ -1311,6 +1315,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelEntrance
   sceneToLoad: MainHub
   isLevelExit: 1
+--- !u!4 &1121254696 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7175790091214622074, guid: 3a5733482e87ff745a4c3d1906301ad8, type: 3}
+  m_PrefabInstance: {fileID: 1121254693}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1387115558
 GameObject:
   m_ObjectHideFlags: 0
@@ -1676,7 +1685,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MazeGenerator
   cellPrefab: {fileID: 8197753261572147750, guid: 537774a093962124da72d55bc39eb48d, type: 3}
   playerObj: {fileID: 553316050}
-  exitObj: {fileID: 0}
+  exitObj: {fileID: 1121254696}
   width: 5
   height: 5
   cellSize: 4
