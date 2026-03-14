@@ -154,7 +154,7 @@ public class FloorManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         foreach (var tile in _safePath)
         {
-            tile.Flash(Color.darkMagenta, 20f);
+            tile.Flash(Color.darkMagenta, 300f);
         }
     }
 
