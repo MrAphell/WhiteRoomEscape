@@ -34,7 +34,7 @@ public class FloorManager : MonoBehaviour
     {
         _grid = new GridTile[_gridSize, _gridSize];
 
-        // A kezdõpont (jobb alsó sarok a képed alapján) -> X: 9.5, Z: -9.5
+        // A kezdõpont
         float startX = 9.5f;
         float startZ = -9.5f;
 
@@ -42,7 +42,6 @@ public class FloorManager : MonoBehaviour
         {
             for (int y = 0; y < _gridSize; y++)
             {
-                // Az X koordináta csökken (9.5-tõl -9.5-ig), a Z nõ (-9.5-tõl 9.5-ig)
                 Vector3 pos = new Vector3(startX - (x * _tileSpacing), transform.position.y, startZ + (y * _tileSpacing));
                 GameObject t = Instantiate(_tilePrefab, pos, Quaternion.identity, transform);
                 _grid[x, y] = t.GetComponent<GridTile>();
@@ -51,17 +50,19 @@ public class FloorManager : MonoBehaviour
         }
     }
 
-    // Az út generálása a (9.5, 0, -9.5) sarokból az ajtóig
+    // Az út generálása
     void GeneratePath()
     {
         _safePath.Clear();
+
+        // Elõször minden csempe csapda lesz, aztán a biztonságos utat kijelöljük
         foreach (var tile in _grid)
         {
             if (tile != null) tile.Setup(tile.x, tile.y, GridTile.TileType.Trap);
         }
 
-        int curX = 0; // Ez felel meg a 9.5-ös X koordinátának
-        int curY = 0; // Ez felel meg a -9.5-ös Z koordinátának
+        int curX = 0;
+        int curY = 0;
 
         // A kezdõkocka mindig biztonságos
         _grid[curX, curY].type = GridTile.TileType.Safe;
@@ -82,6 +83,7 @@ public class FloorManager : MonoBehaviour
 
             GridTile current = _grid[curX, curY];
 
+            // Ha még nincs a biztonságos útban, akkor jelöljük ki
             if (!_safePath.Contains(current))
             {
                 current.type = GridTile.TileType.Safe;
@@ -89,7 +91,7 @@ public class FloorManager : MonoBehaviour
             }
         }
 
-        // Ha elértük az utolsó sort, kihúzzuk az utat az ajtóig (X = 0, ami a rácsban a 9-es vagy 10-es index)
+        // Ha elértük az utolsó sort, kihúzzuk az utat az ajtóig
         int doorIndexX = 9;
         while (curX != doorIndexX)
         {
@@ -108,7 +110,7 @@ public class FloorManager : MonoBehaviour
         _grid[curX, curY].type = GridTile.TileType.Goal;
     }
 
-    // Ezt hívják meg a csempék, ha rájuk lépsz
+    // Ezt hívják meg a csempék, ha rálépünk
     public void OnTileStepped(GridTile tile)
     {
         if (tile.state == GridTile.TileState.Revealed) return;
@@ -131,7 +133,7 @@ public class FloorManager : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
-            // Trükk: CharacterController esetén ki kell kapcsolni, hogy át lehessen tenni máshová!
+            // CharacterController esetén ki kell kapcsolni, hogy át lehessen tenni máshová!
             CharacterController cc = player.GetComponent<CharacterController>();
             if (cc != null) cc.enabled = false;
 
@@ -165,7 +167,5 @@ public class FloorManager : MonoBehaviour
         {
             _exitToHub.SetActive(true);
         }
-
-        // GameManager.CompleteLevel(4); // Ha a GameManager is be lesz kötve, ezt majd kiveheted a kommentbõl
     }
 }
