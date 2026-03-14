@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq; // Ez kell a rendezéshez
+using System.Linq;
 
 // 1. A "Név + Idõ" csomag, amit mentünk
 [System.Serializable]
@@ -11,7 +11,7 @@ public class ScoreEntry
     public float time;
 }
 
-// 2. A Pálya szintû adat: Ez tárolja egy adott pálya (pl. "Game_4") Top 3 rekordját
+// 2. A Pálya szintû adat: Ez tárolja egy adott pálya Top 3 rekordját
 [System.Serializable]
 public class LevelRecord
 {
@@ -24,7 +24,7 @@ public class LevelRecord
     }
 }
 
-// 3. A Fõ Adatbázis: Ezt az osztályt fogjuk JSON-né alakítani
+// 3. Ezt az osztályt fogjuk JSON-né alakítani
 [System.Serializable]
 public class ScoreDatabase
 {
@@ -78,18 +78,18 @@ public class ScoreManager : MonoBehaviour
     // JSON mentése
     private void SaveScores()
     {
-        string json = JsonUtility.ToJson(_database, true); // true = szép, olvasható formátum
+        string json = JsonUtility.ToJson(_database, true);
         File.WriteAllText(_saveFilePath, json);
         Debug.Log("Scoreboard elmentve.");
     }
 
-    // Új idõ hozzáadása és a Top 3 menedzselése (Automatikusan lekéri a profilt!)
+    // Új idõ hozzáadása és a Top 3 menedzselése
     public void AddScore(string levelID, float newTime)
     {
-        // Lekérjük az aktív játékos nevét a PlayerPrefs-bõl (amit a MainMenu elmentett)
+        // Lekérjük az aktív játékos nevét a PlayerPrefs-bõl
         string currentPlayer = PlayerPrefs.GetString("CurrentPlayerName", "Default");
 
-        // 1. Keresés: Megnézzük, van-e már ilyen pálya az adatbázisban (Lambda kifejezés használata)
+        // 1. Keresés: Megnézzük, van-e már ilyen pálya az adatbázisban
         LevelRecord record = _database.records.Find(r => r.levelID == levelID);
 
         // 2. Ha még sosem játszották ezt a pályát, létrehozunk egy új listát neki
@@ -105,20 +105,20 @@ public class ScoreManager : MonoBehaviour
         // 4. Rendezés: Idõ szerint növekvõ sorrendbe rakjuk (leggyorsabb van elöl)
         record.topScores = record.topScores.OrderBy(x => x.time).ToList();
 
-        // 5. Csonkolás (Trimming): Ha 3-nál több idõ lett a listában, a legrosszabbakat (a lista végét) kidobjuk
+        // 5. Csonkolás: Ha 3-nál több idõ lett a listában, a legrosszabbakat kidobjuk
         if (record.topScores.Count > 3)
         {
-            // Eltávolítunk mindent a 3. indextõl kezdve (vagyis a 4. elemtõl a végéig)
+            // Eltávolítunk mindent a 3. indextõl kezdve
             record.topScores.RemoveRange(3, record.topScores.Count - 3);
         }
 
-        // 6. Azonnali perzisztencia: Kiírjuk az új állapotot a JSON fájlba
+        // 6. Kiírjuk az új állapotot a JSON fájlba
         SaveScores();
 
         Debug.Log($"Új idõ rögzítve a {levelID} pályán: {newTime} ({currentPlayer}). Jelenlegi csúcstartó: {record.topScores[0].playerName} - {record.topScores[0].time}");
     }
 
-    // Segédfüggvény a UI (képernyõ) számára, hogy késõbb ki tudja olvasni az adatokat
+    // Segédfüggvény a UI számára, hogy késõbb ki tudja olvasni az adatokat
     public List<ScoreEntry> GetTopScores(string levelID)
     {
         LevelRecord record = _database.records.Find(r => r.levelID == levelID);
