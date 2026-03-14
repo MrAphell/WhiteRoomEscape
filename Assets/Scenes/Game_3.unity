@@ -458,7 +458,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 9
+  m_text: 3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1111,7 +1111,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 4
+  m_text: 3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1473,8 +1473,8 @@ MonoBehaviour:
     m_Bits: 64
   _cameraRoot: {fileID: 1129546513}
   _crosshair: {fileID: 0}
-  _promptText: {fileID: 0}
-  _keypadUI: {fileID: 0}
+  _promptText: {fileID: 2011732051}
+  _keypadUI: {fileID: 1434782257}
 --- !u!1 &1230389599
 GameObject:
   m_ObjectHideFlags: 0
@@ -1839,6 +1839,86 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 407305931}
     m_Modifications:
+    - target: {fileID: 9510649717635090, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1840732654}
+    - target: {fileID: 9510649717635090, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AddDigit
+      objectReference: {fileID: 0}
+    - target: {fileID: 1831310072076365185, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1840732654}
+    - target: {fileID: 1831310072076365185, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AddDigit
+      objectReference: {fileID: 0}
+    - target: {fileID: 2022271596747113198, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1840732654}
+    - target: {fileID: 2022271596747113198, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AddDigit
+      objectReference: {fileID: 0}
+    - target: {fileID: 2095653808262791757, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1840732654}
+    - target: {fileID: 2095653808262791757, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AddDigit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580233215489448259, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1840732654}
+    - target: {fileID: 3580233215489448259, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AddDigit
+      objectReference: {fileID: 0}
+    - target: {fileID: 3653918360056566845, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1840732654}
+    - target: {fileID: 3653918360056566845, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ClosePanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 6131122914876527935, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1840732654}
+    - target: {fileID: 6131122914876527935, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AddDigit
+      objectReference: {fileID: 0}
+    - target: {fileID: 7117268858727956427, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1840732654}
+    - target: {fileID: 7117268858727956427, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AddDigit
+      objectReference: {fileID: 0}
+    - target: {fileID: 7163539381402513545, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1840732654}
+    - target: {fileID: 7163539381402513545, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AddDigit
+      objectReference: {fileID: 0}
+    - target: {fileID: 7224889648012179172, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1840732654}
+    - target: {fileID: 7224889648012179172, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AddDigit
+      objectReference: {fileID: 0}
     - target: {fileID: 8039017210664011321, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1923,6 +2003,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: KeypadUI
       objectReference: {fileID: 0}
+    - target: {fileID: 8753158494024503758, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1840732654}
+    - target: {fileID: 8753158494024503758, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DeleteLastDigit
+      objectReference: {fileID: 0}
+    - target: {fileID: 9018638890021645002, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1840732654}
+    - target: {fileID: 9018638890021645002, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AddDigit
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1933,6 +2029,22 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8039017210664011321, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
   m_PrefabInstance: {fileID: 1434782255}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1434782257 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8092092515033120691, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+  m_PrefabInstance: {fileID: 1434782255}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1434782258 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 198935050097285103, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
+  m_PrefabInstance: {fileID: 1434782255}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1615215649
 GameObject:
   m_ObjectHideFlags: 0
@@ -1971,7 +2083,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 6
+  m_text: 3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2152,7 +2264,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 7
+  m_text: 3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2439,11 +2551,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f49706980d027d4381504ea3f7b1ae0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KeypadSystem
-  _correctCode: 8521
-  _displayText: {fileID: 0}
+  _correctCode: 3333
+  _displayText: {fileID: 1434782258}
   _lockedDoor: {fileID: 278661229}
   _openDoorObject: {fileID: 100262209}
-  _uiPanel: {fileID: 0}
+  _uiPanel: {fileID: 1434782257}
 --- !u!65 &1840732655
 BoxCollider:
   m_ObjectHideFlags: 0

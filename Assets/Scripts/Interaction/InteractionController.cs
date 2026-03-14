@@ -78,7 +78,7 @@ public class InteractionController : MonoBehaviour
         _fpsController.enabled = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        _crosshair.enabled = false;
+        if (_crosshair != null) _crosshair.enabled = false;
     }
 
     // Speciális kezelõ a Keypad bezárásához (visszaadja az irányítást a karakternek)

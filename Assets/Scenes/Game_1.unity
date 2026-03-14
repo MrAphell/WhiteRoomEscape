@@ -211,8 +211,8 @@ MonoBehaviour:
     m_Bits: 64
   _cameraRoot: {fileID: 118863394}
   _crosshair: {fileID: 0}
-  _promptText: {fileID: 0}
-  _keypadUI: {fileID: 0}
+  _promptText: {fileID: 1427924559}
+  _keypadUI: {fileID: 166443285}
 --- !u!1 &166443285 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8092092515033120691, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
@@ -1651,7 +1651,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &971305616 stripped
+--- !u!114 &839425925 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 198935050097285103, guid: 84a9a4ba4a32cdd40b786ece7cae253f, type: 3}
   m_PrefabInstance: {fileID: 6155962877353952850}
@@ -3771,8 +3771,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f49706980d027d4381504ea3f7b1ae0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KeypadSystem
-  _correctCode: 8521
-  _displayText: {fileID: 971305616}
+  _correctCode: 1111
+  _displayText: {fileID: 839425925}
   _lockedDoor: {fileID: 535311647}
   _openDoorObject: {fileID: 1212853417}
   _uiPanel: {fileID: 166443285}
