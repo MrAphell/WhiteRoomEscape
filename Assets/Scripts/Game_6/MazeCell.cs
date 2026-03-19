@@ -4,16 +4,15 @@ using UnityEngine;
 public class MazeCell : MonoBehaviour
 {
     [Header("Falak Referenciája")]
-    public GameObject wallFront; // Északi fal
-    public GameObject wallBack;  // Déli fal
-    public GameObject wallLeft;  // Nyugati fal
-    public GameObject wallRight; // Keleti fal
+    public GameObject wallFront; // Elülsõ fal
+    public GameObject wallBack;  // Hátulsó fal
+    public GameObject wallLeft;  // Bal fal
+    public GameObject wallRight; // Jobb fal
 
     // Ezt a függvényt hívja meg a MazeGenerator, amikor utat tör a labirintusban
     public void RemoveWall(int direction)
     {
-        // Az irányok számozása megegyezik a generátorban használt konstansokkal
-        // 1: Front (Elõre), 2: Back (Hátra), 3: Left (Bal), 4: Right (Jobb)
+        // Az irányok számozása megegyezik a generátorban használt konstansokkalS
         switch (direction)
         {
             case 1:

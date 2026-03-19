@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 // A játék megállításáért, a menü kezeléséért és az idõ (TimeScale) megállításáért felelõs osztály
 public class PauseManager : MonoBehaviour
 {
-    // Singleton minta, hogy a PauseManager minden jeleneten átíveljen
+    // PauseManager minden jeleneten átíveljen
     public static PauseManager Instance;
 
     [Header("UI Elemek")]
@@ -15,7 +15,7 @@ public class PauseManager : MonoBehaviour
 
     private void Awake()
     {
-        // Gondoskodunk róla, hogy csak egyetlen példány létezzen a menedzserbõl
+        // Csak egyetlen példány létezzen a menedzserbõl
         if (Instance == null)
         {
             Instance = this;
@@ -77,14 +77,14 @@ public class PauseManager : MonoBehaviour
     {
         if (pausePanel != null) pausePanel.SetActive(true);
 
-        Time.timeScale = 0f; // Idõ megállítása (fizika, animációk leállnak)
+        Time.timeScale = 0f; // Idõ megállítása
         IsPaused = true;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
 
-    // Visszatérés a fõmenübe: idõ visszaállítása és a jelenet betöltése
+    // Visszatérés a fõmenübe
     public void LoadMainMenu()
     {
         Time.timeScale = 1f;

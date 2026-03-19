@@ -49,7 +49,7 @@ public class MemoryButton : MonoBehaviour, IInteractable
     {
         _isFlashing = true;
         _rend.material.color = flashColor;
-
+        yield return new WaitForSeconds(0.05f);
         yield return new WaitForSeconds(flashDuration);
 
         _rend.material.color = normalColor;

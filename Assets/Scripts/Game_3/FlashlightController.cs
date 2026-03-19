@@ -5,15 +5,12 @@ using TMPro;
 public class FlashlightController : MonoBehaviour
 {
     [Header("Beállítások")]
-    [SerializeField] private AudioClip _clickSound;      // A kapcsoláskor hallható hangeffekt
     [SerializeField] private TextMeshProUGUI _promptText; // Segédszöveg
     private Light _myLight;            // Referencia a fényforrás komponensre
-    private AudioSource _audioSource;   // Referencia a hang lejátszóra
 
     private void Start()
     {
         _myLight = GetComponent<Light>();
-        _audioSource = GetComponent<AudioSource>();
 
         // Kezdéskor a zseblámpa alapértelmezetten ki van kapcsolva
         if (_myLight != null)
@@ -39,12 +36,6 @@ public class FlashlightController : MonoBehaviour
         if (_myLight != null)
         {
             _myLight.enabled = !_myLight.enabled;
-
-            // Kapcsolási hang lejátszása, ha be van állítva
-            if (_audioSource != null && _clickSound != null)
-            {
-                _audioSource.PlayOneShot(_clickSound);
-            }
 
             UpdatePrompt();
         }

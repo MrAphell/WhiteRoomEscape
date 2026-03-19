@@ -20,7 +20,7 @@ public class GraphManager : MonoBehaviour
         if (exitToHubObject != null) exitToHubObject.SetActive(false);
 
         // Összegyûjtjük a hálózat összes elemét a jelenetbõl
-        _allNodes = FindObjectsOfType<GraphNode>();
+        _allNodes = FindObjectsByType<GraphNode>(FindObjectsSortMode.None);
         ScheduleEvaluation();
     }
 
