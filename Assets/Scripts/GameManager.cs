@@ -73,7 +73,6 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    // Ha tényleg mindent (minden profilt) le akarsz gyalulni
     public static void MasterReset()
     {
         PlayerPrefs.DeleteAll();

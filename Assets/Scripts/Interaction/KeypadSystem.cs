@@ -47,6 +47,14 @@ public class KeypadSystem : MonoBehaviour, IInteractable
     // Új szám hozzáadása a beírt kódhoz
     public void AddDigit(string digit)
     {
+        // Ha már sikeresen kinyílt, ne engedjünk beírni semmit
+        if (_displayText.text == "SUCCESS") return;
+
+        if (_displayText.text == "ERROR")
+        {
+            _displayText.color = Color.white;
+        }
+
         if (_currentInput.Length >= 4) return;
         _currentInput += digit;
         UpdateDisplay();
@@ -61,16 +69,16 @@ public class KeypadSystem : MonoBehaviour, IInteractable
             _displayText.text = "SUCCESS";
             _displayText.color = Color.green;
 
-            // Kinyitjuk a kijárathoz vezetõ ajtót
-            if (_openDoorObject != null) _openDoorObject.SetActive(true);
+            // Kinyitjuk a kijárathoz vezetõ ajtót
+            if (_openDoorObject != null) _openDoorObject.SetActive(true);
             if (_lockedDoor != null) _lockedDoor.SetActive(false);
 
             Invoke("ClosePanel", 1f); // Egy másodperc múlva bezárjuk a panelt
-        }
+        }
         else if (_currentInput.Length == 4)
         {
-            // Hibás kód esetén életlevonás és reset
-            _displayText.text = "ERROR";
+            // Hibás kód esetén életlevonás és reset
+            _displayText.text = "ERROR";
             _displayText.color = Color.red;
             _currentInput = "";
             GameManager.LoseLife();
@@ -78,7 +86,13 @@ public class KeypadSystem : MonoBehaviour, IInteractable
     }
 
     // Kijelzõ frissítése a beírt karakterekkel
-    private void UpdateDisplay() { if (_displayText.text != "SUCCESS" && _displayText.text != "ERROR") _displayText.text = _currentInput; }
+    private void UpdateDisplay()
+    {
+        if (_displayText.text != "SUCCESS")
+        {
+            _displayText.text = _currentInput;
+        }
+    }
 
     // Panel bezárása és az irányítás visszaadása a karakternek
     public void ClosePanel()
@@ -89,8 +103,16 @@ public class KeypadSystem : MonoBehaviour, IInteractable
     }
 
     // Utolsó karakter törlése
-    public void DeleteLastDigit()
+    public void DeleteLastDigit()
     {
+        // Ha ERROR felirat van és a játékos a törlés gombot (Backspace) nyomja meg, töröljük a feliratot
+        if (_displayText.text == "ERROR")
+        {
+            _displayText.text = "";
+            _displayText.color = Color.white;
+            return;
+        }
+
         if (_currentInput.Length > 0)
         {
             _currentInput = _currentInput.Substring(0, _currentInput.Length - 1);
