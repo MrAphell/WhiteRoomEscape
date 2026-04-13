@@ -1,463 +1,4074 @@
+
 # White Room Escape
 
-White Room Escape is a modular Unity-based puzzle game developed as a thesis project.  
-The game consists of multiple independent puzzle rooms connected through a central hub system.  
-Each room introduces a different gameplay mechanic and logical challenge while sharing a common interaction and progression framework.
+  
+
+White Room Escape is a modular Unity-based puzzle game developed as a BSc thesis project.
+
+The game consists of multiple puzzle rooms connected through a central hub system.
+
+Each room introduces a different gameplay mechanic and logical challenge while sharing a common interaction, progression, and profile framework.
+
+  
 
 The project focuses on game system architecture, algorithmic puzzle design, and modular gameplay mechanics implemented in C#.
 
+  
+
 ---
+
+  
 
 ## Overview
 
-The player starts in a central hub and must solve a series of puzzle rooms.  
-Each room contains a unique mechanic that must be understood and solved in order to unlock the exit.
+  
 
-Progression is tracked through a profile system and a scoreboard records player performance.
+The player starts from a central hub and progresses through a sequence of puzzle rooms.
+
+Each room contains a distinct mechanic that must be understood and solved in order to complete the level and unlock further progression.
+
+  
+
+Player progression is managed through a profile-based system, while completion times are stored and displayed through a scoreboard subsystem.
+
+  
 
 Core features include:
 
+  
+
 - Main menu and settings system
+
 - Profile management
+
 - Central hub with level progression
-- 9 unique puzzle rooms
-- Interaction system
+
+- 9 different puzzle rooms
+
+- Shared interaction system
+
 - Scoreboard and time tracking
+
 - Modular game architecture
 
+- Automated EditMode and PlayMode tests
+
+  
+
 ---
+
+  
 
 ## Gameplay Structure
 
-The game consists of **9 puzzle rooms**, each implementing a different mechanic.
+  
+
+The game consists of **9 puzzle rooms**, each implementing a different logical or gameplay mechanic.
+
+  
 
 | Level | Description |
+
 |------|-------------|
-| Game 1 | Introductory puzzle with simple interaction mechanics |
-| Game 2 | Logic puzzle using switches or triggers |
-| Game 3 | Exploration-based puzzle with environmental interaction |
-| Game 4 | Grid-based floor puzzle with safe and trap tiles |
-| Game 5 | Pattern or logic-based challenge |
-| Game 6 | Procedural maze generation using a recursive backtracking algorithm |
-| Game 7 | Intermediate puzzle combining multiple interaction elements |
-| Game 8 | Advanced puzzle requiring multi-step problem solving |
+
+| Game 1 | Introductory puzzle with object interaction and keypad usage |
+
+| Game 2 | Logic puzzle based on switch states and combination handling |
+
+| Game 3 | Exploration-oriented puzzle with light and environmental discovery |
+
+| Game 4 | Grid-based navigation puzzle with rule-based movement |
+
+| Game 5 | Memory and pattern-recognition challenge |
+
+| Game 6 | Procedurally generated maze using a recursive backtracking algorithm |
+
+| Game 7 | Stealth-oriented puzzle with detection and enemy behaviour |
+
+| Game 8 | Multi-step logic puzzle built around interconnected activation states |
+
 | Game 9 | Graph-based logic system using interconnected nodes |
 
-Each puzzle room operates independently but integrates with the global game systems.
+  
+
+Each puzzle room works as an independent gameplay space, while remaining integrated into the global game systems.
+
+  
 
 ---
+
+  
 
 ## Core Systems
 
+  
+
 ### Main Menu System
+
+  
 
 Handles navigation between:
 
+  
+
 - Start Game
+
 - Settings
+
 - Profiles
+
 - Scoreboard
 
+  
+
 Implemented in:
-Assets/Scripts/Main/MainMenuController.cs
+
+- `Assets/Scripts/Main/MainMenuController.cs`
+
+  
 
 ---
+
+  
 
 ### Hub System
 
-The hub acts as the central progression system where players can access unlocked puzzle rooms.
+  
+
+The hub acts as the central progression space where players can access unlocked puzzle rooms.
+
+  
 
 Features:
 
+  
+
 - Level unlocking
-- Completion tracking
-- Visual feedback for completed puzzles
+
+- Progression feedback
+
+- Visual distinction between locked, available, and completed levels
+
+  
 
 Implemented in:
-Assets/Scripts/Main/HubManager.cs
+
+- `Assets/Scripts/Main/HubManager.cs`
+
+  
 
 ---
+
+  
 
 ### Interaction System
 
+  
+
 A generic interaction system allows the player to interact with puzzle elements using raycasting.
+
+  
 
 Key components:
 
+  
+
 - `InteractionController`
-- `IInteractable` interface
+
+- `IInteractable`
+
+  
 
 This system allows puzzles to define their own behavior while sharing a common interaction framework.
 
-Assets/Scripts/Interaction
+  
+
+Implemented in:
+
+- `Assets/Scripts/Interaction/`
+
+  
 
 ---
+
+  
 
 ### Game Manager
 
-The `GameManager` controls global game state including:
+  
 
-- level completion
-- player lives
-- score tracking
-- profile data
+The `GameManager` coordinates global game state, including:
 
-Assets/Scripts/GameManager.cs
+  
+
+- active profile handling
+
+- unlocked level progression
+
+- persistent player-related state values
+
+- scene-related progression logic
+
+  
+
+Implemented in:
+
+- `Assets/Scripts/GameManager.cs`
+
+  
 
 ---
+
+  
 
 ### Scoreboard System
 
-Tracks player performance and total completion time across profiles.
+  
+
+The scoreboard subsystem stores and displays completion times for the individual puzzle rooms.
+
+  
 
 Implemented in:
-Assets/Scripts/Main/ScoreboardController.cs
+
+- `Assets/Scripts/ScoreBoard/ScoreManager.cs`
+
+- `Assets/Scripts/ScoreBoard/ScoreboardUI.cs`
+
+  
 
 ---
+
+  
 
 ## Algorithms Used
 
-Several puzzles implement algorithmic solutions:
+  
+
+Several puzzles rely on algorithmic or structured logical solutions.
+
+  
 
 ### Maze Generation (Game 6)
 
-Uses a **Recursive Backtracking algorithm** to generate a procedural maze.
+  
+
+Uses a **recursive backtracking algorithm** to generate a procedural maze.
+
+  
 
 Key concepts:
 
+  
+
 - grid generation
-- stack-based DFS traversal
+
+- depth-first traversal
+
 - wall removal between cells
 
+  
+
 Files:
-MazeGenerator.cs
-MazeCell.cs
+
+- `Assets/Scripts/Game_6/MazeGenerator.cs`
+
+- `Assets/Scripts/Game_6/MazeCell.cs`
+
+  
 
 ---
+
+  
 
 ### Graph Logic System (Game 9)
 
-Implements a node-based logical system where different node types process signals.
+  
 
-Node types include:
+Implements a node-based logical system in which different node types process and propagate signals.
 
-- AND
-- OR
-- XOR
-- Splitter
-- Switch
-- End node
-
-The system evaluates signal propagation through the graph until the final node condition is satisfied.
+  
 
 Files:
-GraphManager.cs
-GraphNode.cs
+
+- `Assets/Scripts/Game_9/GraphManager.cs`
+
+- `Assets/Scripts/Game_9/GraphNode.cs`
+
+  
 
 ---
+
+  
+
+## Testing
+
+  
+
+The project includes automated tests using Unity Test Framework.
+
+  
+
+Two test levels are present:
+
+  
+
+- **EditMode tests** for central logic and state handling
+
+- **PlayMode tests** for runtime interaction and gameplay behaviour
+
+  
+
+Main tested areas include:
+
+  
+
+- `GameManager`
+
+- `HubManager`
+
+- `InteractionController`
+
+- `KeypadSystem`
+
+- `MainMenuController`
+
+- `PauseManager`
+
+- `ScoreManager`
+
+- selected gameplay-related runtime behaviours
+
+  
+
+Test folders:
+
+- `Assets/Tests/EditModeTests/`
+
+- `Assets/Tests/PlayModeTests/`
+
+  
+
+---
+
+  
 
 ## Project Structure
+
+  
+
+```text
+
 Assets
+
 ├── Scenes
+
 │ ├── MainMenu
+
 │ ├── MainHub
+
 │ ├── Game_1 ... Game_9
+
 │
+
 ├── Scripts
+
 │ ├── Main
+
 │ ├── Interaction
+
+│ ├── ScoreBoard
+
 │ ├── Game_1
+
 │ ├── Game_2
+
 │ ├── Game_3
+
 │ ├── Game_4
+
 │ ├── Game_5
+
 │ ├── Game_6
+
 │ ├── Game_7
+
 │ ├── Game_8
+
 │ └── Game_9
 
+│
 
----
+└── Tests
+
+├── EditModeTests
+
+└── PlayModeTests
+
+  
+
+```
 
 ## Technologies Used
 
-- **Unity Engine**
-- **C#**
-- **ShaderLab**
-- **HLSL**
+- Unity Engine
 
-Unity handles the rendering pipeline while gameplay logic and system architecture are implemented in C#.
+- C#
 
----
+- Unity Test Framework
+
+  
+
+Unity provides the engine environment, scene management, UI framework, and runtime systems, while gameplay logic and system architecture are implemented in C#.
+
+  
 
 ## Running the Project
 
 ### Requirements
 
-- Unity **6.3 LTS** (or compatible version)
+  
+
+Use the Unity version specified by the project configuration in:
+
+ProjectSettings/ProjectVersion.txt
+
+  
 
 ### Steps
 
-1. Clone the repository
+1. Clone the repository:
+
+```bash
+
 git clone https://github.com/MrAphell/WhiteRoomEscape.git
+
+```
 
 2. Open the project in Unity Hub
 
 3. Open the scene:
+
 Assets/Scenes/MainMenu
 
-4. Press **Play**
+4. Press Play
 
----
+  
 
 ## Future Improvements
 
-Planned improvements include:
+  
 
-- improved scoreboard logic
-- additional puzzle mechanics
-- enhanced UI feedback
-- improved persistence system for profiles and scores
+Possible future improvements include:
 
----
+  
 
-## Author
+further refinement of scoreboard presentation
 
-Polonkai Olivér  
-Software Engineering BSc Thesis Project
+improved UI feedback
 
----
+expanded puzzle balancing and polish
 
-## License
+fuller gameplay integration of some partially prepared systems
+
+additional automated tests
+
+Author
+
+  
+
+***Polonkai Olivér***
+
+  
+
+*BSc Thesis Project*
+
+  
+
+# License
+
+  
 
 This project was developed for educational and research purposes.
 
+  
+
 ---
+
+  
+
+# Projekt címe
+
+  
+
+Rövid leírás arról, hogy mit csinál ez a projekt, és kiknek készült.
+
+  
 
 # White Room Escape
 
-A **White Room Escape** egy moduláris felépítésű, Unity játékmotorral fejlesztett puzzle játék, amely szakdolgozati projektként készült.  
-A játék több egymástól független feladványszobából áll, amelyeket egy központi hub rendszer köt össze. Minden szoba egyedi játékmeneti mechanikát és logikai kihívást tartalmaz, miközben közös interakciós és progressziós keretrendszert használ.
+  
 
-A projekt fő fókusza a játékrendszerek architektúrája, az algoritmikus puzzle-tervezés, valamint a moduláris játékmeneti mechanikák megvalósítása C# nyelven.
+A White Room Escape egy moduláris felépítésű, Unity-alapú puzzle játék, amely BSc szakdolgozati projektként készült.
+
+A játék több feladványszobából áll, amelyeket egy központi hub rendszer köt össze.
+
+Minden szoba eltérő játékmeneti mechanikát és logikai kihívást kínál, miközben közös interakciós, progressziós és profilkezelési keretrendszert használ.
+
+  
+
+A projekt középpontjában a játékrendszerek architektúrája, az algoritmikus puzzle-tervezés, valamint a C# nyelven megvalósított moduláris játékmeneti mechanikák állnak.
+
+  
 
 ---
+
+  
 
 ## Áttekintés
 
-A játékos egy központi hubból indul, ahonnan különböző feladványszobákba léphet be.  
-Minden szoba egy egyedi mechanikát tartalmaz, amelyet a játékosnak meg kell értenie és meg kell oldania ahhoz, hogy feloldja a kijáratot.
+  
 
-A haladást egy profilrendszer követi, míg a játékos teljesítményét egy ranglista (scoreboard) rögzíti.
+A játékos egy központi hubból indul, majd egymás után halad végig a különböző feladványszobákon.
 
-A játék főbb funkciói:
+Minden szoba egy sajátos mechanikát tartalmaz, amelyet meg kell érteni és meg kell oldani a pálya teljesítéséhez és a további haladás feloldásához.
 
-- Főmenü és beállítási rendszer  
-- Profilkezelés  
-- Központi hub a pályák közötti haladással  
-- 9 egyedi feladványszoba  
-- Interakciós rendszer  
-- Ranglista és időmérés  
-- Moduláris játékarchitektúra  
+  
+
+A játékos haladását profilalapú rendszer kezeli, míg a teljesítési idők tárolását és megjelenítését egy ranglistarendszer végzi.
+
+  
+
+Főbb funkciók:
+
+  
+
+- Főmenü és beállítási rendszer
+
+- Profilkezelés
+
+- Központi hub pályahaladással
+
+- 9 különböző feladványszoba
+
+- Közös interakciós rendszer
+
+- Ranglista és időmérés
+
+- Moduláris játékarchitektúra
+
+- Automatizált EditMode és PlayMode tesztek
+
+  
 
 ---
+
+  
 
 ## Játékmenet felépítése
 
-A játék **9 különböző feladványszobából** áll, amelyek mindegyike más mechanikát valósít meg.
+  
+
+A játék **9 feladványszobából** áll, amelyek mindegyike eltérő logikai vagy játékmeneti mechanikát valósít meg.
+
+  
 
 | Pálya | Leírás |
-|------|-------------|
-| Game 1 | Bevezető puzzle egyszerű interakciós mechanikával |
-| Game 2 | Logikai puzzle kapcsolókkal vagy triggerek segítségével |
-| Game 3 | Felfedezés alapú puzzle környezeti interakciókkal |
-| Game 4 | Rácsalapú padló puzzle biztonságos és csapda csempékkel |
-| Game 5 | Mintafelismerésen vagy logikai sorrenden alapuló kihívás |
-| Game 6 | Procedurálisan generált labirintus rekurzív backtracking algoritmussal |
-| Game 7 | Közepes nehézségű puzzle több interakciós elem kombinációjával |
-| Game 8 | Összetettebb puzzle több lépésből álló megoldással |
-| Game 9 | Gráf alapú logikai rendszer összekapcsolt csomópontokkal |
 
-Minden feladványszoba önállóan működik, de integrálódik a globális játékrendszerbe.
+|------|--------|
+
+| Game 1 | Bevezető puzzle objektuminterakcióval és kódpad használattal |
+
+| Game 2 | Logikai puzzle kapcsolóállapotok és kombinációk kezelésével |
+
+| Game 3 | Felfedezésre épülő puzzle fénnyel és környezeti elemekkel |
+
+| Game 4 | Rácsalapú navigációs puzzle szabályalapú mozgással |
+
+| Game 5 | Memória- és mintafelismerési kihívás |
+
+| Game 6 | Procedurálisan generált labirintus rekurzív backtracking algoritmussal |
+
+| Game 7 | Lopakodásalapú puzzle észleléssel és ellenfélviselkedéssel |
+
+| Game 8 | Többlépcsős logikai puzzle egymásra épülő aktiválási állapotokkal |
+
+| Game 9 | Gráfalapú logikai rendszer összekapcsolt csomópontokkal |
+
+  
+
+Minden feladványszoba önálló játéktérként működik, miközben integrálódik a globális játékrendszerbe.
+
+  
 
 ---
+
+  
 
 ## Fő rendszerek
 
+  
+
 ### Főmenü rendszer
 
-A főmenü biztosítja a navigációt a következő elemek között:
+  
 
-- Játék indítása  
-- Beállítások  
-- Profilok  
-- Ranglista  
+A navigációt az alábbi elemek között kezeli:
 
-Megvalósítás:
-Assets/Scripts/Main/MainMenuController.cs
+  
+
+- Játék indítása
+
+- Beállítások
+
+- Profilok
+
+- Ranglista
+
+  
+
+Megvalósítás helye:
+
+- `Assets/Scripts/Main/MainMenuController.cs`
+
+  
 
 ---
+
+  
 
 ### Hub rendszer
 
-A hub a játék központi haladási rendszere, ahol a játékos hozzáférhet a feloldott feladványszobákhoz.
+  
 
-Funkciók:
+A hub a központi haladási tér, ahol a játékos hozzáférhet a feloldott feladványszobákhoz.
 
-- Pályák feloldása  
-- Teljesítések nyomon követése  
-- Vizuális visszajelzés a teljesített pályákról  
+  
 
-Megvalósítás:
-Assets/Scripts/Main/HubManager.cs
+Főbb funkciók:
+
+  
+
+- Pályafeloldás
+
+- Progressziós visszajelzés
+
+- A zárolt, elérhető és teljesített pályák vizuális megkülönböztetése
+
+  
+
+Megvalósítás helye:
+
+- `Assets/Scripts/Main/HubManager.cs`
+
+  
 
 ---
+
+  
 
 ### Interakciós rendszer
 
-Egy általános interakciós rendszer teszi lehetővé, hogy a játékos raycasting segítségével kapcsolatba lépjen a puzzle elemekkel.
+  
+
+Az általános interakciós rendszer lehetővé teszi, hogy a játékos raycasting segítségével kapcsolatba lépjen a puzzle-elemekkel.
+
+  
 
 Fő komponensek:
 
-- `InteractionController`  
-- `IInteractable` interfész  
+  
 
-Ez a rendszer lehetővé teszi, hogy az egyes puzzle elemek saját viselkedést definiáljanak, miközben közös interakciós keretrendszert használnak.
+- `InteractionController`
+
+- `IInteractable`
+
+  
+
+Ez a rendszer lehetővé teszi, hogy az egyes puzzle-elemek saját viselkedést definiáljanak, miközben közös interakciós keretrendszert használnak.
+
+  
+
+Megvalósítás helye:
+
+- `Assets/Scripts/Interaction/`
+
+  
 
 ---
+
+  
 
 ### Game Manager
 
-A `GameManager` kezeli a globális játékállapotot, például:
+  
 
-- pálya teljesítések  
-- játékos életek  
-- pontszám követés  
-- profil adatok  
+A `GameManager` a globális játékállapot koordinálását végzi, beleértve az alábbiakat:
+
+  
+
+- aktív profil kezelése
+
+- feloldott pályák progressziója
+
+- tartós, játékoshoz kapcsolódó állapotértékek
+
+- jelenetekhez kapcsolódó progressziós logika
+
+  
+
+Megvalósítás helye:
+
+- `Assets/Scripts/GameManager.cs`
+
+  
 
 ---
 
-### Ranglista rendszer
+  
 
-A ranglista a játékos teljesítményét és az összesített teljesítési időt követi a profilok között.
+### Ranglistarendszer
 
-Megvalósítás:
-Assets/Scripts/Main/ScoreboardController.cs
+  
+
+A ranglistarendszer az egyes feladványszobák teljesítési idejét tárolja és jeleníti meg.
+
+  
+
+Megvalósítás helye:
+
+- `Assets/Scripts/ScoreBoard/ScoreManager.cs`
+
+- `Assets/Scripts/ScoreBoard/ScoreboardUI.cs`
+
+  
 
 ---
+
+  
 
 ## Használt algoritmusok
 
-Számos puzzle algoritmikus megoldásokat alkalmaz.
+  
 
-### Labirintus generálás (Game 6)
+Több puzzle algoritmikus vagy strukturált logikai megoldásokra épül.
 
-A pálya **Recursive Backtracking algoritmust** használ egy procedurálisan generált labirintus létrehozásához.
+  
 
-Fő koncepciók:
+### Labirintusgenerálás (Game 6)
 
-- rács generálás  
-- verem alapú DFS bejárás  
-- falak eltávolítása cellák között  
+  
+
+**Rekurzív backtracking algoritmust** használ procedurális labirintus generálására.
+
+  
+
+Főbb fogalmak:
+
+  
+
+- rácsgenerálás
+
+- mélységi bejárás
+
+- falak eltávolítása a cellák között
+
+  
 
 Fájlok:
-MazeGenerator.cs
-MazeCell.cs
+
+- `Assets/Scripts/Game_6/MazeGenerator.cs`
+
+- `Assets/Scripts/Game_6/MazeCell.cs`
+
+  
 
 ---
 
-### Gráf alapú logikai rendszer (Game 9)
+  
 
-A rendszer egy csomópont alapú logikai hálózatot valósít meg, ahol különböző node típusok dolgozzák fel a jeleket.
+### Gráfalapú logikai rendszer (Game 9)
 
-Node típusok:
+  
 
-- AND  
-- OR  
-- XOR  
-- Splitter  
-- Switch  
-- End node  
+Csomópontalapú logikai rendszert valósít meg, amelyben különböző csomóponttípusok dolgozzák fel és továbbítják a jeleket.
 
-A rendszer a gráfon keresztül propagálja a jeleket, amíg a végső csomópont feltétele teljesül.
+  
 
 Fájlok:
-GraphManager.cs
-GraphNode.cs
+
+- `Assets/Scripts/Game_9/GraphManager.cs`
+
+- `Assets/Scripts/Game_9/GraphNode.cs`
+
+  
 
 ---
 
-## Projekt struktúra
+  
+
+## Tesztelés
+
+  
+
+A projekt automatizált teszteket is tartalmaz a Unity Test Framework segítségével.
+
+  
+
+Két tesztszint található benne:
+
+  
+
+- **EditMode tesztek** a központi logika és állapotkezelés vizsgálatára
+
+- **PlayMode tesztek** a futás közbeni interakciók és játékmeneti viselkedések vizsgálatára
+
+  
+
+A főbb tesztelt területek:
+
+  
+
+- `GameManager`
+
+- `HubManager`
+
+- `InteractionController`
+
+- `KeypadSystem`
+
+- `MainMenuController`
+
+- `PauseManager`
+
+- `ScoreManager`
+
+- egyes futás közbeni játékmeneti viselkedések
+
+  
+
+Tesztek mappái:
+
+- `Assets/Tests/EditModeTests/`
+
+- `Assets/Tests/PlayModeTests/`
+
+  
+
+---
+
+  
+
+## Projektstruktúra
+
+  
+
+```text
+
 Assets
+
 ├── Scenes
+
 │ ├── MainMenu
+
 │ ├── MainHub
+
 │ ├── Game_1 ... Game_9
+
 │
+
 ├── Scripts
+
 │ ├── Main
+
 │ ├── Interaction
+
+│ ├── ScoreBoard
+
 │ ├── Game_1
+
 │ ├── Game_2
+
 │ ├── Game_3
+
 │ ├── Game_4
+
 │ ├── Game_5
+
 │ ├── Game_6
+
 │ ├── Game_7
+
 │ ├── Game_8
+
 │ └── Game_9
 
----
+│
+
+└── Tests
+
+├── EditModeTests
+
+└── PlayModeTests
+
+```
 
 ## Felhasznált technológiák
 
+  
+
 - **Unity Engine**
+
 - **C#**
-- **ShaderLab**
-- **HLSL**
 
-A Unity kezeli a grafikai renderelési folyamatot, míg a játékmenet logikája és a rendszerarchitektúra C# nyelven került megvalósításra.
+- **Unity Test Framework**
 
----
+  
+
+A Unity biztosítja a motor környezetét, a jelenetkezelést, a felhasználói felület keretrendszerét és a futásidejű rendszereket, míg a játékmeneti logika és a rendszerarchitektúra C# nyelven készült.
+
+  
 
 ## A projekt futtatása
 
+  
+
 ### Követelmények
 
-- Unity **6.3 LTS** (vagy kompatibilis verzió)
+  
+
+Használd a projekt konfigurációjában megadott Unity-verziót itt:
+
+  
+
+`ProjectSettings/ProjectVersion.txt`
+
+  
 
 ### Lépések
 
-1. A repository klónozása
+  
+
+1. Klónozd a repository-t:
+
+  
+
+```bash
+
 git clone https://github.com/MrAphell/WhiteRoomEscape.git
 
-2. A projekt megnyitása Unity Hub segítségével
+```
 
-3. A következő jelenet megnyitása:
-Assets/Scenes/MainMenu
+Nyisd meg a projektet Unity Hubban.
 
-4. A **Play** gomb megnyomása
+  
 
----
+2. Nyisd meg a következő jelenetet:
+
+  
+
+3. Assets/Scenes/MainMenu
+
+  
+
+4. Nyomd meg a Play gombot.
+
+  
 
 ## Jövőbeli fejlesztések
 
-Tervezett fejlesztések:
+  
 
-- a ranglista logikájának továbbfejlesztése  
-- további puzzle mechanikák  
-- jobb felhasználói visszajelzések a felületen  
-- fejlettebb adatmentési rendszer profilok és pontszámok számára  
+Lehetséges jövőbeli fejlesztések:
+
+  
+
+- a ranglista megjelenítésének további finomítása
+
+- jobb felhasználói visszajelzések
+
+- a puzzle-ök egyensúlyának és kidolgozottságának bővítése
+
+- egyes előkészített rendszerek teljesebb játékmeneti integrációja
+
+- további automatizált tesztek
+
+  
 
 ---
+
+  
 
 ## Szerző
 
-Polonkai Olivér  
-Programtervező informatikus BSc szakdolgozati projekt
+  
+
+**Polonkai Olivér**
+
+  
+
+*BSc szakdolgozati projekt*
+
+  
 
 ---
 
+  
+
 ## Licenc
 
-A projekt oktatási és kutatási célból készült.
+  
+
+A projekt oktatási és kutatási célból készült.# White Room Escape
+
+  
+
+White Room Escape is a modular Unity-based puzzle game developed as a BSc thesis project.
+
+The game consists of multiple puzzle rooms connected through a central hub system.
+
+Each room introduces a different gameplay mechanic and logical challenge while sharing a common interaction, progression, and profile framework.
+
+  
+
+The project focuses on game system architecture, algorithmic puzzle design, and modular gameplay mechanics implemented in C#.
+
+  
+
+---
+
+  
+
+## Overview
+
+  
+
+The player starts from a central hub and progresses through a sequence of puzzle rooms.
+
+Each room contains a distinct mechanic that must be understood and solved in order to complete the level and unlock further progression.
+
+  
+
+Player progression is managed through a profile-based system, while completion times are stored and displayed through a scoreboard subsystem.
+
+  
+
+Core features include:
+
+  
+
+- Main menu and settings system
+
+- Profile management
+
+- Central hub with level progression
+
+- 9 different puzzle rooms
+
+- Shared interaction system
+
+- Scoreboard and time tracking
+
+- Modular game architecture
+
+- Automated EditMode and PlayMode tests
+
+  
+
+---
+
+  
+
+## Gameplay Structure
+
+  
+
+The game consists of **9 puzzle rooms**, each implementing a different logical or gameplay mechanic.
+
+  
+
+| Level | Description |
+
+|------|-------------|
+
+| Game 1 | Introductory puzzle with object interaction and keypad usage |
+
+| Game 2 | Logic puzzle based on switch states and combination handling |
+
+| Game 3 | Exploration-oriented puzzle with light and environmental discovery |
+
+| Game 4 | Grid-based navigation puzzle with rule-based movement |
+
+| Game 5 | Memory and pattern-recognition challenge |
+
+| Game 6 | Procedurally generated maze using a recursive backtracking algorithm |
+
+| Game 7 | Stealth-oriented puzzle with detection and enemy behaviour |
+
+| Game 8 | Multi-step logic puzzle built around interconnected activation states |
+
+| Game 9 | Graph-based logic system using interconnected nodes |
+
+  
+
+Each puzzle room works as an independent gameplay space, while remaining integrated into the global game systems.
+
+  
+
+---
+
+  
+
+## Core Systems
+
+  
+
+### Main Menu System
+
+  
+
+Handles navigation between:
+
+  
+
+- Start Game
+
+- Settings
+
+- Profiles
+
+- Scoreboard
+
+  
+
+Implemented in:
+
+- `Assets/Scripts/Main/MainMenuController.cs`
+
+  
+
+---
+
+  
+
+### Hub System
+
+  
+
+The hub acts as the central progression space where players can access unlocked puzzle rooms.
+
+  
+
+Features:
+
+  
+
+- Level unlocking
+
+- Progression feedback
+
+- Visual distinction between locked, available, and completed levels
+
+  
+
+Implemented in:
+
+- `Assets/Scripts/Main/HubManager.cs`
+
+  
+
+---
+
+  
+
+### Interaction System
+
+  
+
+A generic interaction system allows the player to interact with puzzle elements using raycasting.
+
+  
+
+Key components:
+
+  
+
+- `InteractionController`
+
+- `IInteractable`
+
+  
+
+This system allows puzzles to define their own behavior while sharing a common interaction framework.
+
+  
+
+Implemented in:
+
+- `Assets/Scripts/Interaction/`
+
+  
+
+---
+
+  
+
+### Game Manager
+
+  
+
+The `GameManager` coordinates global game state, including:
+
+  
+
+- active profile handling
+
+- unlocked level progression
+
+- persistent player-related state values
+
+- scene-related progression logic
+
+  
+
+Implemented in:
+
+- `Assets/Scripts/GameManager.cs`
+
+  
+
+---
+
+  
+
+### Scoreboard System
+
+  
+
+The scoreboard subsystem stores and displays completion times for the individual puzzle rooms.
+
+  
+
+Implemented in:
+
+- `Assets/Scripts/ScoreBoard/ScoreManager.cs`
+
+- `Assets/Scripts/ScoreBoard/ScoreboardUI.cs`
+
+  
+
+---
+
+  
+
+## Algorithms Used
+
+  
+
+Several puzzles rely on algorithmic or structured logical solutions.
+
+  
+
+### Maze Generation (Game 6)
+
+  
+
+Uses a **recursive backtracking algorithm** to generate a procedural maze.
+
+  
+
+Key concepts:
+
+  
+
+- grid generation
+
+- depth-first traversal
+
+- wall removal between cells
+
+  
+
+Files:
+
+- `Assets/Scripts/Game_6/MazeGenerator.cs`
+
+- `Assets/Scripts/Game_6/MazeCell.cs`
+
+  
+
+---
+
+  
+
+### Graph Logic System (Game 9)
+
+  
+
+Implements a node-based logical system in which different node types process and propagate signals.
+
+  
+
+Files:
+
+- `Assets/Scripts/Game_9/GraphManager.cs`
+
+- `Assets/Scripts/Game_9/GraphNode.cs`
+
+  
+
+---
+
+  
+
+## Testing
+
+  
+
+The project includes automated tests using Unity Test Framework.
+
+  
+
+Two test levels are present:
+
+  
+
+- **EditMode tests** for central logic and state handling
+
+- **PlayMode tests** for runtime interaction and gameplay behaviour
+
+  
+
+Main tested areas include:
+
+  
+
+- `GameManager`
+
+- `HubManager`
+
+- `InteractionController`
+
+- `KeypadSystem`
+
+- `MainMenuController`
+
+- `PauseManager`
+
+- `ScoreManager`
+
+- selected gameplay-related runtime behaviours
+
+  
+
+Test folders:
+
+- `Assets/Tests/EditModeTests/`
+
+- `Assets/Tests/PlayModeTests/`
+
+  
+
+---
+
+  
+
+## Project Structure
+
+  
+
+```text
+
+Assets
+
+├── Scenes
+
+│ ├── MainMenu
+
+│ ├── MainHub
+
+│ ├── Game_1 ... Game_9
+
+│
+
+├── Scripts
+
+│ ├── Main
+
+│ ├── Interaction
+
+│ ├── ScoreBoard
+
+│ ├── Game_1
+
+│ ├── Game_2
+
+│ ├── Game_3
+
+│ ├── Game_4
+
+│ ├── Game_5
+
+│ ├── Game_6
+
+│ ├── Game_7
+
+│ ├── Game_8
+
+│ └── Game_9
+
+│
+
+└── Tests
+
+├── EditModeTests
+
+└── PlayModeTests
+
+  
+
+```
+
+## Technologies Used
+
+- Unity Engine
+
+- C#
+
+- Unity Test Framework
+
+  
+
+Unity provides the engine environment, scene management, UI framework, and runtime systems, while gameplay logic and system architecture are implemented in C#.
+
+  
+
+## Running the Project
+
+### Requirements
+
+  
+
+Use the Unity version specified by the project configuration in:
+
+ProjectSettings/ProjectVersion.txt
+
+  
+
+### Steps
+
+1. Clone the repository:
+
+```bash
+
+git clone https://github.com/MrAphell/WhiteRoomEscape.git
+
+```
+
+2. Open the project in Unity Hub
+
+3. Open the scene:
+
+Assets/Scenes/MainMenu
+
+4. Press Play
+
+  
+
+## Future Improvements
+
+  
+
+Possible future improvements include:
+
+  
+
+further refinement of scoreboard presentation
+
+improved UI feedback
+
+expanded puzzle balancing and polish
+
+fuller gameplay integration of some partially prepared systems
+
+additional automated tests
+
+Author
+
+  
+
+***Polonkai Olivér***
+
+  
+
+*BSc Thesis Project*
+
+  
+
+# License
+
+  
+
+This project was developed for educational and research purposes.
+
+  
+
+---
+
+  
+
+# Projekt címe
+
+  
+
+Rövid leírás arról, hogy mit csinál ez a projekt, és kiknek készült.
+
+  
+
+# White Room Escape
+
+  
+
+A White Room Escape egy moduláris felépítésű, Unity-alapú puzzle játék, amely BSc szakdolgozati projektként készült.
+
+A játék több feladványszobából áll, amelyeket egy központi hub rendszer köt össze.
+
+Minden szoba eltérő játékmeneti mechanikát és logikai kihívást kínál, miközben közös interakciós, progressziós és profilkezelési keretrendszert használ.
+
+  
+
+A projekt középpontjában a játékrendszerek architektúrája, az algoritmikus puzzle-tervezés, valamint a C# nyelven megvalósított moduláris játékmeneti mechanikák állnak.
+
+  
+
+---
+
+  
+
+## Áttekintés
+
+  
+
+A játékos egy központi hubból indul, majd egymás után halad végig a különböző feladványszobákon.
+
+Minden szoba egy sajátos mechanikát tartalmaz, amelyet meg kell érteni és meg kell oldani a pálya teljesítéséhez és a további haladás feloldásához.
+
+  
+
+A játékos haladását profilalapú rendszer kezeli, míg a teljesítési idők tárolását és megjelenítését egy ranglistarendszer végzi.
+
+  
+
+Főbb funkciók:
+
+  
+
+- Főmenü és beállítási rendszer
+
+- Profilkezelés
+
+- Központi hub pályahaladással
+
+- 9 különböző feladványszoba
+
+- Közös interakciós rendszer
+
+- Ranglista és időmérés
+
+- Moduláris játékarchitektúra
+
+- Automatizált EditMode és PlayMode tesztek
+
+  
+
+---
+
+  
+
+## Játékmenet felépítése
+
+  
+
+A játék **9 feladványszobából** áll, amelyek mindegyike eltérő logikai vagy játékmeneti mechanikát valósít meg.
+
+  
+
+| Pálya | Leírás |
+
+|------|--------|
+
+| Game 1 | Bevezető puzzle objektuminterakcióval és kódpad használattal |
+
+| Game 2 | Logikai puzzle kapcsolóállapotok és kombinációk kezelésével |
+
+| Game 3 | Felfedezésre épülő puzzle fénnyel és környezeti elemekkel |
+
+| Game 4 | Rácsalapú navigációs puzzle szabályalapú mozgással |
+
+| Game 5 | Memória- és mintafelismerési kihívás |
+
+| Game 6 | Procedurálisan generált labirintus rekurzív backtracking algoritmussal |
+
+| Game 7 | Lopakodásalapú puzzle észleléssel és ellenfélviselkedéssel |
+
+| Game 8 | Többlépcsős logikai puzzle egymásra épülő aktiválási állapotokkal |
+
+| Game 9 | Gráfalapú logikai rendszer összekapcsolt csomópontokkal |
+
+  
+
+Minden feladványszoba önálló játéktérként működik, miközben integrálódik a globális játékrendszerbe.
+
+  
+
+---
+
+  
+
+## Fő rendszerek
+
+  
+
+### Főmenü rendszer
+
+  
+
+A navigációt az alábbi elemek között kezeli:
+
+  
+
+- Játék indítása
+
+- Beállítások
+
+- Profilok
+
+- Ranglista
+
+  
+
+Megvalósítás helye:
+
+- `Assets/Scripts/Main/MainMenuController.cs`
+
+  
+
+---
+
+  
+
+### Hub rendszer
+
+  
+
+A hub a központi haladási tér, ahol a játékos hozzáférhet a feloldott feladványszobákhoz.
+
+  
+
+Főbb funkciók:
+
+  
+
+- Pályafeloldás
+
+- Progressziós visszajelzés
+
+- A zárolt, elérhető és teljesített pályák vizuális megkülönböztetése
+
+  
+
+Megvalósítás helye:
+
+- `Assets/Scripts/Main/HubManager.cs`
+
+  
+
+---
+
+  
+
+### Interakciós rendszer
+
+  
+
+Az általános interakciós rendszer lehetővé teszi, hogy a játékos raycasting segítségével kapcsolatba lépjen a puzzle-elemekkel.
+
+  
+
+Fő komponensek:
+
+  
+
+- `InteractionController`
+
+- `IInteractable`
+
+  
+
+Ez a rendszer lehetővé teszi, hogy az egyes puzzle-elemek saját viselkedést definiáljanak, miközben közös interakciós keretrendszert használnak.
+
+  
+
+Megvalósítás helye:
+
+- `Assets/Scripts/Interaction/`
+
+  
+
+---
+
+  
+
+### Game Manager
+
+  
+
+A `GameManager` a globális játékállapot koordinálását végzi, beleértve az alábbiakat:
+
+  
+
+- aktív profil kezelése
+
+- feloldott pályák progressziója
+
+- tartós, játékoshoz kapcsolódó állapotértékek
+
+- jelenetekhez kapcsolódó progressziós logika
+
+  
+
+Megvalósítás helye:
+
+- `Assets/Scripts/GameManager.cs`
+
+  
+
+---
+
+  
+
+### Ranglistarendszer
+
+  
+
+A ranglistarendszer az egyes feladványszobák teljesítési idejét tárolja és jeleníti meg.
+
+  
+
+Megvalósítás helye:
+
+- `Assets/Scripts/ScoreBoard/ScoreManager.cs`
+
+- `Assets/Scripts/ScoreBoard/ScoreboardUI.cs`
+
+  
+
+---
+
+  
+
+## Használt algoritmusok
+
+  
+
+Több puzzle algoritmikus vagy strukturált logikai megoldásokra épül.
+
+  
+
+### Labirintusgenerálás (Game 6)
+
+  
+
+**Rekurzív backtracking algoritmust** használ procedurális labirintus generálására.
+
+  
+
+Főbb fogalmak:
+
+  
+
+- rácsgenerálás
+
+- mélységi bejárás
+
+- falak eltávolítása a cellák között
+
+  
+
+Fájlok:
+
+- `Assets/Scripts/Game_6/MazeGenerator.cs`
+
+- `Assets/Scripts/Game_6/MazeCell.cs`
+
+  
+
+---
+
+  
+
+### Gráfalapú logikai rendszer (Game 9)
+
+  
+
+Csomópontalapú logikai rendszert valósít meg, amelyben különböző csomóponttípusok dolgozzák fel és továbbítják a jeleket.
+
+  
+
+Fájlok:
+
+- `Assets/Scripts/Game_9/GraphManager.cs`
+
+- `Assets/Scripts/Game_9/GraphNode.cs`
+
+  
+
+---
+
+  
+
+## Tesztelés
+
+  
+
+A projekt automatizált teszteket is tartalmaz a Unity Test Framework segítségével.
+
+  
+
+Két tesztszint található benne:
+
+  
+
+- **EditMode tesztek** a központi logika és állapotkezelés vizsgálatára
+
+- **PlayMode tesztek** a futás közbeni interakciók és játékmeneti viselkedések vizsgálatára
+
+  
+
+A főbb tesztelt területek:
+
+  
+
+- `GameManager`
+
+- `HubManager`
+
+- `InteractionController`
+
+- `KeypadSystem`
+
+- `MainMenuController`
+
+- `PauseManager`
+
+- `ScoreManager`
+
+- egyes futás közbeni játékmeneti viselkedések
+
+  
+
+Tesztek mappái:
+
+- `Assets/Tests/EditModeTests/`
+
+- `Assets/Tests/PlayModeTests/`
+
+  
+
+---
+
+  
+
+## Projektstruktúra
+
+  
+
+```text
+
+Assets
+
+├── Scenes
+
+│ ├── MainMenu
+
+│ ├── MainHub
+
+│ ├── Game_1 ... Game_9
+
+│
+
+├── Scripts
+
+│ ├── Main
+
+│ ├── Interaction
+
+│ ├── ScoreBoard
+
+│ ├── Game_1
+
+│ ├── Game_2
+
+│ ├── Game_3
+
+│ ├── Game_4
+
+│ ├── Game_5
+
+│ ├── Game_6
+
+│ ├── Game_7
+
+│ ├── Game_8
+
+│ └── Game_9
+
+│
+
+└── Tests
+
+├── EditModeTests
+
+└── PlayModeTests
+
+```
+
+## Felhasznált technológiák
+
+  
+
+- **Unity Engine**
+
+- **C#**
+
+- **Unity Test Framework**
+
+  
+
+A Unity biztosítja a motor környezetét, a jelenetkezelést, a felhasználói felület keretrendszerét és a futásidejű rendszereket, míg a játékmeneti logika és a rendszerarchitektúra C# nyelven készült.
+
+  
+
+## A projekt futtatása
+
+  
+
+### Követelmények
+
+  
+
+Használd a projekt konfigurációjában megadott Unity-verziót itt:
+
+  
+
+`ProjectSettings/ProjectVersion.txt`
+
+  
+
+### Lépések
+
+  
+
+1. Klónozd a repository-t:
+
+  
+
+```bash
+
+git clone https://github.com/MrAphell/WhiteRoomEscape.git
+
+```
+
+Nyisd meg a projektet Unity Hubban.
+
+  
+
+2. Nyisd meg a következő jelenetet:
+
+  
+
+3. Assets/Scenes/MainMenu
+
+  
+
+4. Nyomd meg a Play gombot.
+
+  
+
+## Jövőbeli fejlesztések
+
+  
+
+Lehetséges jövőbeli fejlesztések:
+
+  
+
+- a ranglista megjelenítésének további finomítása
+
+- jobb felhasználói visszajelzések
+
+- a puzzle-ök egyensúlyának és kidolgozottságának bővítése
+
+- egyes előkészített rendszerek teljesebb játékmeneti integrációja
+
+- további automatizált tesztek
+
+  
+
+---
+
+  
+
+## Szerző
+
+  
+
+**Polonkai Olivér**
+
+  
+
+*BSc szakdolgozati projekt*
+
+  
+
+---
+
+  
+
+## Licenc
+
+  
+
+A projekt oktatási és kutatási célból készült.# White Room Escape
+
+  
+
+White Room Escape is a modular Unity-based puzzle game developed as a BSc thesis project.
+
+The game consists of multiple puzzle rooms connected through a central hub system.
+
+Each room introduces a different gameplay mechanic and logical challenge while sharing a common interaction, progression, and profile framework.
+
+  
+
+The project focuses on game system architecture, algorithmic puzzle design, and modular gameplay mechanics implemented in C#.
+
+  
+
+---
+
+  
+
+## Overview
+
+  
+
+The player starts from a central hub and progresses through a sequence of puzzle rooms.
+
+Each room contains a distinct mechanic that must be understood and solved in order to complete the level and unlock further progression.
+
+  
+
+Player progression is managed through a profile-based system, while completion times are stored and displayed through a scoreboard subsystem.
+
+  
+
+Core features include:
+
+  
+
+- Main menu and settings system
+
+- Profile management
+
+- Central hub with level progression
+
+- 9 different puzzle rooms
+
+- Shared interaction system
+
+- Scoreboard and time tracking
+
+- Modular game architecture
+
+- Automated EditMode and PlayMode tests
+
+  
+
+---
+
+  
+
+## Gameplay Structure
+
+  
+
+The game consists of **9 puzzle rooms**, each implementing a different logical or gameplay mechanic.
+
+  
+
+| Level | Description |
+
+|------|-------------|
+
+| Game 1 | Introductory puzzle with object interaction and keypad usage |
+
+| Game 2 | Logic puzzle based on switch states and combination handling |
+
+| Game 3 | Exploration-oriented puzzle with light and environmental discovery |
+
+| Game 4 | Grid-based navigation puzzle with rule-based movement |
+
+| Game 5 | Memory and pattern-recognition challenge |
+
+| Game 6 | Procedurally generated maze using a recursive backtracking algorithm |
+
+| Game 7 | Stealth-oriented puzzle with detection and enemy behaviour |
+
+| Game 8 | Multi-step logic puzzle built around interconnected activation states |
+
+| Game 9 | Graph-based logic system using interconnected nodes |
+
+  
+
+Each puzzle room works as an independent gameplay space, while remaining integrated into the global game systems.
+
+  
+
+---
+
+  
+
+## Core Systems
+
+  
+
+### Main Menu System
+
+  
+
+Handles navigation between:
+
+  
+
+- Start Game
+
+- Settings
+
+- Profiles
+
+- Scoreboard
+
+  
+
+Implemented in:
+
+- `Assets/Scripts/Main/MainMenuController.cs`
+
+  
+
+---
+
+  
+
+### Hub System
+
+  
+
+The hub acts as the central progression space where players can access unlocked puzzle rooms.
+
+  
+
+Features:
+
+  
+
+- Level unlocking
+
+- Progression feedback
+
+- Visual distinction between locked, available, and completed levels
+
+  
+
+Implemented in:
+
+- `Assets/Scripts/Main/HubManager.cs`
+
+  
+
+---
+
+  
+
+### Interaction System
+
+  
+
+A generic interaction system allows the player to interact with puzzle elements using raycasting.
+
+  
+
+Key components:
+
+  
+
+- `InteractionController`
+
+- `IInteractable`
+
+  
+
+This system allows puzzles to define their own behavior while sharing a common interaction framework.
+
+  
+
+Implemented in:
+
+- `Assets/Scripts/Interaction/`
+
+  
+
+---
+
+  
+
+### Game Manager
+
+  
+
+The `GameManager` coordinates global game state, including:
+
+  
+
+- active profile handling
+
+- unlocked level progression
+
+- persistent player-related state values
+
+- scene-related progression logic
+
+  
+
+Implemented in:
+
+- `Assets/Scripts/GameManager.cs`
+
+  
+
+---
+
+  
+
+### Scoreboard System
+
+  
+
+The scoreboard subsystem stores and displays completion times for the individual puzzle rooms.
+
+  
+
+Implemented in:
+
+- `Assets/Scripts/ScoreBoard/ScoreManager.cs`
+
+- `Assets/Scripts/ScoreBoard/ScoreboardUI.cs`
+
+  
+
+---
+
+  
+
+## Algorithms Used
+
+  
+
+Several puzzles rely on algorithmic or structured logical solutions.
+
+  
+
+### Maze Generation (Game 6)
+
+  
+
+Uses a **recursive backtracking algorithm** to generate a procedural maze.
+
+  
+
+Key concepts:
+
+  
+
+- grid generation
+
+- depth-first traversal
+
+- wall removal between cells
+
+  
+
+Files:
+
+- `Assets/Scripts/Game_6/MazeGenerator.cs`
+
+- `Assets/Scripts/Game_6/MazeCell.cs`
+
+  
+
+---
+
+  
+
+### Graph Logic System (Game 9)
+
+  
+
+Implements a node-based logical system in which different node types process and propagate signals.
+
+  
+
+Files:
+
+- `Assets/Scripts/Game_9/GraphManager.cs`
+
+- `Assets/Scripts/Game_9/GraphNode.cs`
+
+  
+
+---
+
+  
+
+## Testing
+
+  
+
+The project includes automated tests using Unity Test Framework.
+
+  
+
+Two test levels are present:
+
+  
+
+- **EditMode tests** for central logic and state handling
+
+- **PlayMode tests** for runtime interaction and gameplay behaviour
+
+  
+
+Main tested areas include:
+
+  
+
+- `GameManager`
+
+- `HubManager`
+
+- `InteractionController`
+
+- `KeypadSystem`
+
+- `MainMenuController`
+
+- `PauseManager`
+
+- `ScoreManager`
+
+- selected gameplay-related runtime behaviours
+
+  
+
+Test folders:
+
+- `Assets/Tests/EditModeTests/`
+
+- `Assets/Tests/PlayModeTests/`
+
+  
+
+---
+
+  
+
+## Project Structure
+
+  
+
+```text
+
+Assets
+
+├── Scenes
+
+│ ├── MainMenu
+
+│ ├── MainHub
+
+│ ├── Game_1 ... Game_9
+
+│
+
+├── Scripts
+
+│ ├── Main
+
+│ ├── Interaction
+
+│ ├── ScoreBoard
+
+│ ├── Game_1
+
+│ ├── Game_2
+
+│ ├── Game_3
+
+│ ├── Game_4
+
+│ ├── Game_5
+
+│ ├── Game_6
+
+│ ├── Game_7
+
+│ ├── Game_8
+
+│ └── Game_9
+
+│
+
+└── Tests
+
+├── EditModeTests
+
+└── PlayModeTests
+
+  
+
+```
+
+## Technologies Used
+
+- Unity Engine
+
+- C#
+
+- Unity Test Framework
+
+  
+
+Unity provides the engine environment, scene management, UI framework, and runtime systems, while gameplay logic and system architecture are implemented in C#.
+
+  
+
+## Running the Project
+
+### Requirements
+
+  
+
+Use the Unity version specified by the project configuration in:
+
+ProjectSettings/ProjectVersion.txt
+
+  
+
+### Steps
+
+1. Clone the repository:
+
+```bash
+
+git clone https://github.com/MrAphell/WhiteRoomEscape.git
+
+```
+
+2. Open the project in Unity Hub
+
+3. Open the scene:
+
+Assets/Scenes/MainMenu
+
+4. Press Play
+
+  
+
+## Future Improvements
+
+  
+
+Possible future improvements include:
+
+  
+
+further refinement of scoreboard presentation
+
+improved UI feedback
+
+expanded puzzle balancing and polish
+
+fuller gameplay integration of some partially prepared systems
+
+additional automated tests
+
+Author
+
+  
+
+***Polonkai Olivér***
+
+  
+
+*BSc Thesis Project*
+
+  
+
+# License
+
+  
+
+This project was developed for educational and research purposes.
+
+  
+
+---
+
+  
+
+# Projekt címe
+
+  
+
+Rövid leírás arról, hogy mit csinál ez a projekt, és kiknek készült.
+
+  
+
+# White Room Escape
+
+  
+
+A White Room Escape egy moduláris felépítésű, Unity-alapú puzzle játék, amely BSc szakdolgozati projektként készült.
+
+A játék több feladványszobából áll, amelyeket egy központi hub rendszer köt össze.
+
+Minden szoba eltérő játékmeneti mechanikát és logikai kihívást kínál, miközben közös interakciós, progressziós és profilkezelési keretrendszert használ.
+
+  
+
+A projekt középpontjában a játékrendszerek architektúrája, az algoritmikus puzzle-tervezés, valamint a C# nyelven megvalósított moduláris játékmeneti mechanikák állnak.
+
+  
+
+---
+
+  
+
+## Áttekintés
+
+  
+
+A játékos egy központi hubból indul, majd egymás után halad végig a különböző feladványszobákon.
+
+Minden szoba egy sajátos mechanikát tartalmaz, amelyet meg kell érteni és meg kell oldani a pálya teljesítéséhez és a további haladás feloldásához.
+
+  
+
+A játékos haladását profilalapú rendszer kezeli, míg a teljesítési idők tárolását és megjelenítését egy ranglistarendszer végzi.
+
+  
+
+Főbb funkciók:
+
+  
+
+- Főmenü és beállítási rendszer
+
+- Profilkezelés
+
+- Központi hub pályahaladással
+
+- 9 különböző feladványszoba
+
+- Közös interakciós rendszer
+
+- Ranglista és időmérés
+
+- Moduláris játékarchitektúra
+
+- Automatizált EditMode és PlayMode tesztek
+
+  
+
+---
+
+  
+
+## Játékmenet felépítése
+
+  
+
+A játék **9 feladványszobából** áll, amelyek mindegyike eltérő logikai vagy játékmeneti mechanikát valósít meg.
+
+  
+
+| Pálya | Leírás |
+
+|------|--------|
+
+| Game 1 | Bevezető puzzle objektuminterakcióval és kódpad használattal |
+
+| Game 2 | Logikai puzzle kapcsolóállapotok és kombinációk kezelésével |
+
+| Game 3 | Felfedezésre épülő puzzle fénnyel és környezeti elemekkel |
+
+| Game 4 | Rácsalapú navigációs puzzle szabályalapú mozgással |
+
+| Game 5 | Memória- és mintafelismerési kihívás |
+
+| Game 6 | Procedurálisan generált labirintus rekurzív backtracking algoritmussal |
+
+| Game 7 | Lopakodásalapú puzzle észleléssel és ellenfélviselkedéssel |
+
+| Game 8 | Többlépcsős logikai puzzle egymásra épülő aktiválási állapotokkal |
+
+| Game 9 | Gráfalapú logikai rendszer összekapcsolt csomópontokkal |
+
+  
+
+Minden feladványszoba önálló játéktérként működik, miközben integrálódik a globális játékrendszerbe.
+
+  
+
+---
+
+  
+
+## Fő rendszerek
+
+  
+
+### Főmenü rendszer
+
+  
+
+A navigációt az alábbi elemek között kezeli:
+
+  
+
+- Játék indítása
+
+- Beállítások
+
+- Profilok
+
+- Ranglista
+
+  
+
+Megvalósítás helye:
+
+- `Assets/Scripts/Main/MainMenuController.cs`
+
+  
+
+---
+
+  
+
+### Hub rendszer
+
+  
+
+A hub a központi haladási tér, ahol a játékos hozzáférhet a feloldott feladványszobákhoz.
+
+  
+
+Főbb funkciók:
+
+  
+
+- Pályafeloldás
+
+- Progressziós visszajelzés
+
+- A zárolt, elérhető és teljesített pályák vizuális megkülönböztetése
+
+  
+
+Megvalósítás helye:
+
+- `Assets/Scripts/Main/HubManager.cs`
+
+  
+
+---
+
+  
+
+### Interakciós rendszer
+
+  
+
+Az általános interakciós rendszer lehetővé teszi, hogy a játékos raycasting segítségével kapcsolatba lépjen a puzzle-elemekkel.
+
+  
+
+Fő komponensek:
+
+  
+
+- `InteractionController`
+
+- `IInteractable`
+
+  
+
+Ez a rendszer lehetővé teszi, hogy az egyes puzzle-elemek saját viselkedést definiáljanak, miközben közös interakciós keretrendszert használnak.
+
+  
+
+Megvalósítás helye:
+
+- `Assets/Scripts/Interaction/`
+
+  
+
+---
+
+  
+
+### Game Manager
+
+  
+
+A `GameManager` a globális játékállapot koordinálását végzi, beleértve az alábbiakat:
+
+  
+
+- aktív profil kezelése
+
+- feloldott pályák progressziója
+
+- tartós, játékoshoz kapcsolódó állapotértékek
+
+- jelenetekhez kapcsolódó progressziós logika
+
+  
+
+Megvalósítás helye:
+
+- `Assets/Scripts/GameManager.cs`
+
+  
+
+---
+
+  
+
+### Ranglistarendszer
+
+  
+
+A ranglistarendszer az egyes feladványszobák teljesítési idejét tárolja és jeleníti meg.
+
+  
+
+Megvalósítás helye:
+
+- `Assets/Scripts/ScoreBoard/ScoreManager.cs`
+
+- `Assets/Scripts/ScoreBoard/ScoreboardUI.cs`
+
+  
+
+---
+
+  
+
+## Használt algoritmusok
+
+  
+
+Több puzzle algoritmikus vagy strukturált logikai megoldásokra épül.
+
+  
+
+### Labirintusgenerálás (Game 6)
+
+  
+
+**Rekurzív backtracking algoritmust** használ procedurális labirintus generálására.
+
+  
+
+Főbb fogalmak:
+
+  
+
+- rácsgenerálás
+
+- mélységi bejárás
+
+- falak eltávolítása a cellák között
+
+  
+
+Fájlok:
+
+- `Assets/Scripts/Game_6/MazeGenerator.cs`
+
+- `Assets/Scripts/Game_6/MazeCell.cs`
+
+  
+
+---
+
+  
+
+### Gráfalapú logikai rendszer (Game 9)
+
+  
+
+Csomópontalapú logikai rendszert valósít meg, amelyben különböző csomóponttípusok dolgozzák fel és továbbítják a jeleket.
+
+  
+
+Fájlok:
+
+- `Assets/Scripts/Game_9/GraphManager.cs`
+
+- `Assets/Scripts/Game_9/GraphNode.cs`
+
+  
+
+---
+
+  
+
+## Tesztelés
+
+  
+
+A projekt automatizált teszteket is tartalmaz a Unity Test Framework segítségével.
+
+  
+
+Két tesztszint található benne:
+
+  
+
+- **EditMode tesztek** a központi logika és állapotkezelés vizsgálatára
+
+- **PlayMode tesztek** a futás közbeni interakciók és játékmeneti viselkedések vizsgálatára
+
+  
+
+A főbb tesztelt területek:
+
+  
+
+- `GameManager`
+
+- `HubManager`
+
+- `InteractionController`
+
+- `KeypadSystem`
+
+- `MainMenuController`
+
+- `PauseManager`
+
+- `ScoreManager`
+
+- egyes futás közbeni játékmeneti viselkedések
+
+  
+
+Tesztek mappái:
+
+- `Assets/Tests/EditModeTests/`
+
+- `Assets/Tests/PlayModeTests/`
+
+  
+
+---
+
+  
+
+## Projektstruktúra
+
+  
+
+```text
+
+Assets
+
+├── Scenes
+
+│ ├── MainMenu
+
+│ ├── MainHub
+
+│ ├── Game_1 ... Game_9
+
+│
+
+├── Scripts
+
+│ ├── Main
+
+│ ├── Interaction
+
+│ ├── ScoreBoard
+
+│ ├── Game_1
+
+│ ├── Game_2
+
+│ ├── Game_3
+
+│ ├── Game_4
+
+│ ├── Game_5
+
+│ ├── Game_6
+
+│ ├── Game_7
+
+│ ├── Game_8
+
+│ └── Game_9
+
+│
+
+└── Tests
+
+├── EditModeTests
+
+└── PlayModeTests
+
+```
+
+## Felhasznált technológiák
+
+  
+
+- **Unity Engine**
+
+- **C#**
+
+- **Unity Test Framework**
+
+  
+
+A Unity biztosítja a motor környezetét, a jelenetkezelést, a felhasználói felület keretrendszerét és a futásidejű rendszereket, míg a játékmeneti logika és a rendszerarchitektúra C# nyelven készült.
+
+  
+
+## A projekt futtatása
+
+  
+
+### Követelmények
+
+  
+
+Használd a projekt konfigurációjában megadott Unity-verziót itt:
+
+  
+
+`ProjectSettings/ProjectVersion.txt`
+
+  
+
+### Lépések
+
+  
+
+1. Klónozd a repository-t:
+
+  
+
+```bash
+
+git clone https://github.com/MrAphell/WhiteRoomEscape.git
+
+```
+
+Nyisd meg a projektet Unity Hubban.
+
+  
+
+2. Nyisd meg a következő jelenetet:
+
+  
+
+3. Assets/Scenes/MainMenu
+
+  
+
+4. Nyomd meg a Play gombot.
+
+  
+
+## Jövőbeli fejlesztések
+
+  
+
+Lehetséges jövőbeli fejlesztések:
+
+  
+
+- a ranglista megjelenítésének további finomítása
+
+- jobb felhasználói visszajelzések
+
+- a puzzle-ök egyensúlyának és kidolgozottságának bővítése
+
+- egyes előkészített rendszerek teljesebb játékmeneti integrációja
+
+- további automatizált tesztek
+
+  
+
+---
+
+  
+
+## Szerző
+
+  
+
+**Polonkai Olivér**
+
+  
+
+*BSc szakdolgozati projekt*
+
+  
+
+---
+
+  
+
+## Licenc
+
+  
+
+A projekt oktatási és kutatási célból készült.# White Room Escape
+
+  
+
+White Room Escape is a modular Unity-based puzzle game developed as a BSc thesis project.
+
+The game consists of multiple puzzle rooms connected through a central hub system.
+
+Each room introduces a different gameplay mechanic and logical challenge while sharing a common interaction, progression, and profile framework.
+
+  
+
+The project focuses on game system architecture, algorithmic puzzle design, and modular gameplay mechanics implemented in C#.
+
+  
+
+---
+
+  
+
+## Overview
+
+  
+
+The player starts from a central hub and progresses through a sequence of puzzle rooms.
+
+Each room contains a distinct mechanic that must be understood and solved in order to complete the level and unlock further progression.
+
+  
+
+Player progression is managed through a profile-based system, while completion times are stored and displayed through a scoreboard subsystem.
+
+  
+
+Core features include:
+
+  
+
+- Main menu and settings system
+
+- Profile management
+
+- Central hub with level progression
+
+- 9 different puzzle rooms
+
+- Shared interaction system
+
+- Scoreboard and time tracking
+
+- Modular game architecture
+
+- Automated EditMode and PlayMode tests
+
+  
+
+---
+
+  
+
+## Gameplay Structure
+
+  
+
+The game consists of **9 puzzle rooms**, each implementing a different logical or gameplay mechanic.
+
+  
+
+| Level | Description |
+
+|------|-------------|
+
+| Game 1 | Introductory puzzle with object interaction and keypad usage |
+
+| Game 2 | Logic puzzle based on switch states and combination handling |
+
+| Game 3 | Exploration-oriented puzzle with light and environmental discovery |
+
+| Game 4 | Grid-based navigation puzzle with rule-based movement |
+
+| Game 5 | Memory and pattern-recognition challenge |
+
+| Game 6 | Procedurally generated maze using a recursive backtracking algorithm |
+
+| Game 7 | Stealth-oriented puzzle with detection and enemy behaviour |
+
+| Game 8 | Multi-step logic puzzle built around interconnected activation states |
+
+| Game 9 | Graph-based logic system using interconnected nodes |
+
+  
+
+Each puzzle room works as an independent gameplay space, while remaining integrated into the global game systems.
+
+  
+
+---
+
+  
+
+## Core Systems
+
+  
+
+### Main Menu System
+
+  
+
+Handles navigation between:
+
+  
+
+- Start Game
+
+- Settings
+
+- Profiles
+
+- Scoreboard
+
+  
+
+Implemented in:
+
+- `Assets/Scripts/Main/MainMenuController.cs`
+
+  
+
+---
+
+  
+
+### Hub System
+
+  
+
+The hub acts as the central progression space where players can access unlocked puzzle rooms.
+
+  
+
+Features:
+
+  
+
+- Level unlocking
+
+- Progression feedback
+
+- Visual distinction between locked, available, and completed levels
+
+  
+
+Implemented in:
+
+- `Assets/Scripts/Main/HubManager.cs`
+
+  
+
+---
+
+  
+
+### Interaction System
+
+  
+
+A generic interaction system allows the player to interact with puzzle elements using raycasting.
+
+  
+
+Key components:
+
+  
+
+- `InteractionController`
+
+- `IInteractable`
+
+  
+
+This system allows puzzles to define their own behavior while sharing a common interaction framework.
+
+  
+
+Implemented in:
+
+- `Assets/Scripts/Interaction/`
+
+  
+
+---
+
+  
+
+### Game Manager
+
+  
+
+The `GameManager` coordinates global game state, including:
+
+  
+
+- active profile handling
+
+- unlocked level progression
+
+- persistent player-related state values
+
+- scene-related progression logic
+
+  
+
+Implemented in:
+
+- `Assets/Scripts/GameManager.cs`
+
+  
+
+---
+
+  
+
+### Scoreboard System
+
+  
+
+The scoreboard subsystem stores and displays completion times for the individual puzzle rooms.
+
+  
+
+Implemented in:
+
+- `Assets/Scripts/ScoreBoard/ScoreManager.cs`
+
+- `Assets/Scripts/ScoreBoard/ScoreboardUI.cs`
+
+  
+
+---
+
+  
+
+## Algorithms Used
+
+  
+
+Several puzzles rely on algorithmic or structured logical solutions.
+
+  
+
+### Maze Generation (Game 6)
+
+  
+
+Uses a **recursive backtracking algorithm** to generate a procedural maze.
+
+  
+
+Key concepts:
+
+  
+
+- grid generation
+
+- depth-first traversal
+
+- wall removal between cells
+
+  
+
+Files:
+
+- `Assets/Scripts/Game_6/MazeGenerator.cs`
+
+- `Assets/Scripts/Game_6/MazeCell.cs`
+
+  
+
+---
+
+  
+
+### Graph Logic System (Game 9)
+
+  
+
+Implements a node-based logical system in which different node types process and propagate signals.
+
+  
+
+Files:
+
+- `Assets/Scripts/Game_9/GraphManager.cs`
+
+- `Assets/Scripts/Game_9/GraphNode.cs`
+
+  
+
+---
+
+  
+
+## Testing
+
+  
+
+The project includes automated tests using Unity Test Framework.
+
+  
+
+Two test levels are present:
+
+  
+
+- **EditMode tests** for central logic and state handling
+
+- **PlayMode tests** for runtime interaction and gameplay behaviour
+
+  
+
+Main tested areas include:
+
+  
+
+- `GameManager`
+
+- `HubManager`
+
+- `InteractionController`
+
+- `KeypadSystem`
+
+- `MainMenuController`
+
+- `PauseManager`
+
+- `ScoreManager`
+
+- selected gameplay-related runtime behaviours
+
+  
+
+Test folders:
+
+- `Assets/Tests/EditModeTests/`
+
+- `Assets/Tests/PlayModeTests/`
+
+  
+
+---
+
+  
+
+## Project Structure
+
+  
+
+```text
+
+Assets
+
+├── Scenes
+
+│ ├── MainMenu
+
+│ ├── MainHub
+
+│ ├── Game_1 ... Game_9
+
+│
+
+├── Scripts
+
+│ ├── Main
+
+│ ├── Interaction
+
+│ ├── ScoreBoard
+
+│ ├── Game_1
+
+│ ├── Game_2
+
+│ ├── Game_3
+
+│ ├── Game_4
+
+│ ├── Game_5
+
+│ ├── Game_6
+
+│ ├── Game_7
+
+│ ├── Game_8
+
+│ └── Game_9
+
+│
+
+└── Tests
+
+├── EditModeTests
+
+└── PlayModeTests
+
+  
+
+```
+
+## Technologies Used
+
+- Unity Engine
+
+- C#
+
+- Unity Test Framework
+
+  
+
+Unity provides the engine environment, scene management, UI framework, and runtime systems, while gameplay logic and system architecture are implemented in C#.
+
+  
+
+## Running the Project
+
+### Requirements
+
+  
+
+Use the Unity version specified by the project configuration in:
+
+ProjectSettings/ProjectVersion.txt
+
+  
+
+### Steps
+
+1. Clone the repository:
+
+	```bash
+
+	git clone https://github.com/MrAphell/WhiteRoomEscape.git
+
+	```
+
+2. Open the project in Unity Hub
+
+3. Open the scene:
+
+	Assets/Scenes/MainMenu
+
+4. Press Play
+
+  
+
+## Future Improvements
+
+  
+
+Possible future improvements include:
+
+  
+
+- further refinement of scoreboard presentation
+
+- improved UI feedback
+
+- expanded puzzle balancing and polish
+
+- fuller gameplay integration of some partially prepared systems
+
+- additional automated tests
+
+---
+
+Author:
+  
+
+***Polonkai Olivér***
+
+  
+
+*BSc Thesis Project*
+
+  
+
+# License
+
+  
+
+This project was developed for educational and research purposes.
+
+  
+
+---
+
+  
+
+# White Room Escape
+
+  
+
+A White Room Escape egy moduláris felépítésű, Unity-alapú puzzle játék, amely BSc szakdolgozati projektként készült.
+
+A játék több feladványszobából áll, amelyeket egy központi hub rendszer köt össze.
+
+Minden szoba eltérő játékmeneti mechanikát és logikai kihívást kínál, miközben közös interakciós, progressziós és profilkezelési keretrendszert használ.
+
+  
+
+A projekt középpontjában a játékrendszerek architektúrája, az algoritmikus puzzle-tervezés, valamint a C# nyelven megvalósított moduláris játékmeneti mechanikák állnak.
+
+  
+
+---
+
+  
+
+## Áttekintés
+
+  
+
+A játékos egy központi hubból indul, majd egymás után halad végig a különböző feladványszobákon.
+
+Minden szoba egy sajátos mechanikát tartalmaz, amelyet meg kell érteni és meg kell oldani a pálya teljesítéséhez és a további haladás feloldásához.
+
+  
+
+A játékos haladását profilalapú rendszer kezeli, míg a teljesítési idők tárolását és megjelenítését egy ranglistarendszer végzi.
+
+  
+
+Főbb funkciók:
+
+  
+
+- Főmenü és beállítási rendszer
+
+- Profilkezelés
+
+- Központi hub pályahaladással
+
+- 9 különböző feladványszoba
+
+- Közös interakciós rendszer
+
+- Ranglista és időmérés
+
+- Moduláris játékarchitektúra
+
+- Automatizált EditMode és PlayMode tesztek
+
+  
+
+---
+
+  
+
+## Játékmenet felépítése
+
+  
+
+A játék **9 feladványszobából** áll, amelyek mindegyike eltérő logikai vagy játékmeneti mechanikát valósít meg.
+
+  
+
+| Pálya | Leírás |
+
+|------|--------|
+
+| Game 1 | Bevezető puzzle objektuminterakcióval és kódpad használattal |
+
+| Game 2 | Logikai puzzle kapcsolóállapotok és kombinációk kezelésével |
+
+| Game 3 | Felfedezésre épülő puzzle fénnyel és környezeti elemekkel |
+
+| Game 4 | Rácsalapú navigációs puzzle szabályalapú mozgással |
+
+| Game 5 | Memória- és mintafelismerési kihívás |
+
+| Game 6 | Procedurálisan generált labirintus rekurzív backtracking algoritmussal |
+
+| Game 7 | Lopakodásalapú puzzle észleléssel és ellenfélviselkedéssel |
+
+| Game 8 | Többlépcsős logikai puzzle egymásra épülő aktiválási állapotokkal |
+
+| Game 9 | Gráfalapú logikai rendszer összekapcsolt csomópontokkal |
+
+  
+
+Minden feladványszoba önálló játéktérként működik, miközben integrálódik a globális játékrendszerbe.
+
+  
+
+---
+
+  
+
+## Fő rendszerek
+
+  
+
+### Főmenü rendszer
+
+  
+
+A navigációt az alábbi elemek között kezeli:
+
+  
+
+- Játék indítása
+
+- Beállítások
+
+- Profilok
+
+- Ranglista
+
+  
+
+Megvalósítás helye:
+
+- `Assets/Scripts/Main/MainMenuController.cs`
+
+  
+
+---
+
+  
+
+### Hub rendszer
+
+  
+
+A hub a központi haladási tér, ahol a játékos hozzáférhet a feloldott feladványszobákhoz.
+
+  
+
+Főbb funkciók:
+
+  
+
+- Pályafeloldás
+
+- Progressziós visszajelzés
+
+- A zárolt, elérhető és teljesített pályák vizuális megkülönböztetése
+
+  
+
+Megvalósítás helye:
+
+- `Assets/Scripts/Main/HubManager.cs`
+
+  
+
+---
+
+  
+
+### Interakciós rendszer
+
+  
+
+Az általános interakciós rendszer lehetővé teszi, hogy a játékos raycasting segítségével kapcsolatba lépjen a puzzle-elemekkel.
+
+  
+
+Fő komponensek:
+
+  
+
+- `InteractionController`
+
+- `IInteractable`
+
+  
+
+Ez a rendszer lehetővé teszi, hogy az egyes puzzle-elemek saját viselkedést definiáljanak, miközben közös interakciós keretrendszert használnak.
+
+  
+
+Megvalósítás helye:
+
+- `Assets/Scripts/Interaction/`
+
+  
+
+---
+
+  
+
+### Game Manager
+
+  
+
+A `GameManager` a globális játékállapot koordinálását végzi, beleértve az alábbiakat:
+
+  
+
+- aktív profil kezelése
+
+- feloldott pályák progressziója
+
+- tartós, játékoshoz kapcsolódó állapotértékek
+
+- jelenetekhez kapcsolódó progressziós logika
+
+  
+
+Megvalósítás helye:
+
+- `Assets/Scripts/GameManager.cs`
+
+  
+
+---
+
+  
+
+### Ranglistarendszer
+
+  
+
+A ranglistarendszer az egyes feladványszobák teljesítési idejét tárolja és jeleníti meg.
+
+  
+
+Megvalósítás helye:
+
+- `Assets/Scripts/ScoreBoard/ScoreManager.cs`
+
+- `Assets/Scripts/ScoreBoard/ScoreboardUI.cs`
+
+  
+
+---
+
+  
+
+## Használt algoritmusok
+
+  
+
+Több puzzle algoritmikus vagy strukturált logikai megoldásokra épül.
+
+  
+
+### Labirintusgenerálás (Game 6)
+
+  
+
+**Rekurzív backtracking algoritmust** használ procedurális labirintus generálására.
+
+  
+
+Főbb fogalmak:
+
+  
+
+- rácsgenerálás
+
+- mélységi bejárás
+
+- falak eltávolítása a cellák között
+
+  
+
+Fájlok:
+
+- `Assets/Scripts/Game_6/MazeGenerator.cs`
+
+- `Assets/Scripts/Game_6/MazeCell.cs`
+
+  
+
+---
+
+  
+
+### Gráfalapú logikai rendszer (Game 9)
+
+  
+
+Csomópontalapú logikai rendszert valósít meg, amelyben különböző csomóponttípusok dolgozzák fel és továbbítják a jeleket.
+
+  
+
+Fájlok:
+
+- `Assets/Scripts/Game_9/GraphManager.cs`
+
+- `Assets/Scripts/Game_9/GraphNode.cs`
+
+  
+
+---
+
+  
+
+## Tesztelés
+
+  
+
+A projekt automatizált teszteket is tartalmaz a Unity Test Framework segítségével.
+
+  
+
+Két tesztszint található benne:
+
+  
+
+- **EditMode tesztek** a központi logika és állapotkezelés vizsgálatára
+
+- **PlayMode tesztek** a futás közbeni interakciók és játékmeneti viselkedések vizsgálatára
+
+  
+
+A főbb tesztelt területek:
+
+  
+
+- `GameManager`
+
+- `HubManager`
+
+- `InteractionController`
+
+- `KeypadSystem`
+
+- `MainMenuController`
+
+- `PauseManager`
+
+- `ScoreManager`
+
+- egyes futás közbeni játékmeneti viselkedések
+
+  
+
+Tesztek mappái:
+
+- `Assets/Tests/EditModeTests/`
+
+- `Assets/Tests/PlayModeTests/`
+
+  
+
+---
+
+  
+
+## Projektstruktúra
+
+  
+
+```text
+
+Assets
+
+├── Scenes
+
+│ ├── MainMenu
+
+│ ├── MainHub
+
+│ ├── Game_1 ... Game_9
+
+│
+
+├── Scripts
+
+│ ├── Main
+
+│ ├── Interaction
+
+│ ├── ScoreBoard
+
+│ ├── Game_1
+
+│ ├── Game_2
+
+│ ├── Game_3
+
+│ ├── Game_4
+
+│ ├── Game_5
+
+│ ├── Game_6
+
+│ ├── Game_7
+
+│ ├── Game_8
+
+│ └── Game_9
+
+│
+
+└── Tests
+
+├── EditModeTests
+
+└── PlayModeTests
+
+```
+
+## Felhasznált technológiák
+
+  
+
+- **Unity Engine**
+
+- **C#**
+
+- **Unity Test Framework**
+
+  
+
+A Unity biztosítja a motor környezetét, a jelenetkezelést, a felhasználói felület keretrendszerét és a futásidejű rendszereket, míg a játékmeneti logika és a rendszerarchitektúra C# nyelven készült.
+
+  
+
+## A projekt futtatása
+
+  
+
+### Követelmények
+
+  
+
+Használd a projekt konfigurációjában megadott Unity-verziót itt:
+
+  
+
+`ProjectSettings/ProjectVersion.txt`
+
+  
+
+### Lépések
+
+  
+
+1. Klónozd a repository-t:
+
+  
+
+	```bash
+
+	git clone https://github.com/MrAphell/WhiteRoomEscape.git
+
+	```
+
+	Nyisd meg a projektet Unity Hubban.
+
+  
+
+2. Nyisd meg a következő jelenetet:
+
+  
+
+3. Assets/Scenes/MainMenu
+
+  
+
+4. Nyomd meg a Play gombot.
+
+  
+
+## Jövőbeli fejlesztések
+
+  
+
+Lehetséges jövőbeli fejlesztések:
+
+  
+
+- a ranglista megjelenítésének további finomítása
+
+- jobb felhasználói visszajelzések
+
+- a puzzle-ök egyensúlyának és kidolgozottságának bővítése
+
+- egyes előkészített rendszerek teljesebb játékmeneti integrációja
+
+- további automatizált tesztek
+
+  
+
+---
+
+
+## Szerző
+
+  
+
+***Polonkai Olivér***
+
+  
+
+*BSc szakdolgozati projekt*
+
+  
+
+---
+
+  
+
+## Licenc
+
+  
+
+A projekt oktatási és kutatási célból készült
